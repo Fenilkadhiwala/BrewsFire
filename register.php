@@ -5,12 +5,13 @@ include "./connection/connect.php";
 if (isset($_POST['register'])) {
 
 
-    $uname = $_POST['uname'];
+    $fname = $_POST['fname'];
+    $lname = $_POST['lname'];
     $email = $_POST['email'];
     $contact = $_POST['contact'];
     $psw = $_POST['psw'];
 
-    $query = "INSERT INTO `register`(uname,email,contact,psw) VALUES('$uname','$email','$contact','$psw')";
+    $query = "INSERT INTO `register`(fname,lname,email,contact,psw) VALUES('$fname','$lname','$email','$contact','$psw')";
 
     $result = mysqli_query($con, $query);
 

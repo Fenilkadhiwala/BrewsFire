@@ -1,3 +1,18 @@
+<?php
+session_start();
+if (isset($_SESSION['id'])) {
+
+    // $btn = "sign out";
+    $flag = 1;
+    $uid = $_SESSION['id'];
+    $fname = $_SESSION['fname'];
+} else {
+    // $btn = "sign in";
+    $flag = 0;
+}
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -28,15 +43,23 @@
                 <span class="text-uppercase fw-lighter ms-2">Brews Fire</span>
             </a>
 
+           <?php
+           if ($flag == 1) {
+
+               echo '
             <div class="order-lg-2 nav-btns">
-                <button type="button" class="btn position-relative">
-                    <i class="fa fa-shopping-cart"></i>
-                    <span class="position-absolute top-0 start-100 translate-middle badge bg-primary">5</span>
-                </button>
-                <button type="button" class="btn position-relative">
-                    <i class="fa fa-search"></i>
-                </button>
-            </div>
+            <button type="button" class="btn position-relative">
+                <i class="fa fa-shopping-cart"></i>
+                <span class="position-absolute top-0 start-100 translate-middle badge bg-primary">5</span>
+            </button>
+            <button type="button" class="btn position-relative">
+                <i class="fa fa-search"></i>
+            </button>
+
+        </div>
+            ';
+           }
+           ?>
 
             <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu">
                 <span class="navbar-toggler-icon"></span>
@@ -54,17 +77,35 @@
                         <a class="nav-link text-uppercase text-dark" href="#special">specials</a>
                     </li>
                     <li class="nav-item px-2 py-2">
-                        <a class="nav-link text-uppercase text-dark" href="#blogs">blogs</a>
-                    </li>
-                    <li class="nav-item px-2 py-2">
                         <a class="nav-link text-uppercase text-dark" href="#about">about us</a>
                     </li>
                     <li class="nav-item px-2 py-2 border-0">
                         <a class="nav-link text-uppercase text-dark" href="#popular">popular</a>
                     </li>
-                    <li class="nav-item px-2 py-2 border-0">
-                        <a class="nav-link text-uppercase text-dark" href="login.php">sign in</a>
+                    <?php
+                    if ($flag == 1) {
+                        echo '
+                        <li class="nav-item px-2 py-2 border-0">
+                        <a class="nav-link text-uppercase text-dark" href="logout.php">
+                           sign out
+                        </a>
                     </li>
+                    <li class="nav-item px-2 py-2 border-0">
+                    <a class="nav-link text-uppercase text-dark" href="profile.php?id=' . $uid . '">
+                       account
+                    </a>
+                </li>
+                        ';
+                    } else {
+                        echo '
+                        <li class="nav-item px-2 py-2 border-0">
+                        <a class="nav-link text-uppercase text-dark" href="login.php">
+                           sign in
+                        </a>
+                    </li>
+                        ';
+                    }
+                    ?>
                 </ul>
             </div>
         </div>
@@ -630,10 +671,6 @@
         </div>
     </footer>
     <!-- end of footer -->
-
-
-
-
     <!-- jquery -->
     <script src="js/jquery-3.6.0.js"></script>
     <!-- isotope js -->

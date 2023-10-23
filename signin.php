@@ -5,10 +5,10 @@ include "./connection/connect.php";
 if (isset($_POST['login'])) {
 
 
-    $uname = $_POST['uname'];
+    $email = $_POST['email'];
     $psw = $_POST['psw'];
 
-    $query = "SELECT * FROM `register` WHERE uname='$uname' AND psw='$psw'";
+    $query = "SELECT * FROM `register` WHERE email='$email' AND psw='$psw'";
 
 
 
@@ -19,6 +19,7 @@ if (isset($_POST['login'])) {
     if ($rows) {
         session_start();
         $_SESSION['id'] = $rows['id'];
+        $_SESSION['fname'] = $rows['fname'];
         header("location:index.php");
     } else {
 

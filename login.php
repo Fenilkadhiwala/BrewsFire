@@ -1,4 +1,3 @@
-
 <?php
 session_start();
 
@@ -47,20 +46,35 @@ if (isset($_SESSION['error'])) {
 
         }
     </style>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/css/bootstrap.min.css">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" />
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"
-        integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p"
-        crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.min.js"
-        integrity="sha384-Atwg2Pkwv9vp0ygtn1JAojH0nYbwNJLPhwyoVbhoPwBhjQPR5VtM2+xf0Uwh9KtT"
-        crossorigin="anonymous"></script>
-    <link rel="icon" type="image" href="fi1.png">
+     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
+        integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <!-- bootstrap css -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
+    <link rel="stylesheet" href="bootstrap-5.0.2-dist/css/bootstrap.min.css">
+    <!-- custom css -->
+    <link rel="stylesheet" href="css/main.css">
     <title>Brews Fire | Log In</title>
-    
+    <style>
+        #myBtn{
+            /* background:red; */
+            border-radius:0px;
+            background:#198754;
+            color:white;
+        }
+    </style>
 </head>
 
 <body>
+<nav style="height:76px;" class="navbar navbar-expand-lg navbar-light bg-white py-4 fixed-top">
+        <div class="container">
+            <a class="navbar-brand d-flex justify-content-between align-items-center order-lg-0" href="index.html">
+
+                <span class="text-uppercase fw-lighter ms-2">Brews Fire</span>
+            </a>
+        </div>
+    </nav>
     <div class="p-4" id="parent">
         <div class="container">
             <div class="row">
@@ -77,9 +91,9 @@ if (isset($_SESSION['error'])) {
                         <h2 class="p-2 text-center mb-4 h4" id="formHeading">Login</h2>
                         <form action="signin.php" method="post">
                             <div class="form-group mt-3">
-                                <label class="mb-2" for="uname">Username <span style="color: red;">*</span></label>
-                                <input class="form-control" id="username" name="uname" type="text"
-                                    placeholder="username" required />
+                                <label class="mb-2" for="uname">Email <span style="color: red;">*</span></label>
+                                <input class="form-control" id="username" name="email" type="text"
+                                    placeholder="email" required />
                             </div>
                             <div class="form-group mt-3">
                                 <label class="mb-2" for="psw">Password <span style="color: red;">*</span></label>
@@ -95,14 +109,14 @@ if (isset($_SESSION['error'])) {
                                <a href="signup.php">Create Account</a>
                             </div>
 
-                            <button name="login" class="btn btn-success btn-lg w-100 mt-4">Login</button>
+                            <button id="myBtn" name="login" class="btn btn-success btn-lg w-100 mt-4">Login</button>
                         </form>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+   
 </body>
 
 </html>

@@ -14,7 +14,7 @@
 
     .formContainer {
         box-shadow: 4px 8px 16px #d7d7d7;
-        margin: 15px auto; /* Updated margin value */
+        margin: 75px auto; /* Updated margin value */
         padding: 20px;
         border-radius: 0px 0px 4px 4px;
     }
@@ -41,11 +41,27 @@
         integrity="sha384-Atwg2Pkwv9vp0ygtn1JAojH0nYbwNJLPhwyoVbhoPwBhjQPR5VtM2+xf0Uwh9KtT"
         crossorigin="anonymous"></script>
     <link rel="icon" type="image" href="fi1.png">
+    <link rel="stylesheet" href="css/main.css">
     <title>Brews Fire | Sign up</title>
-    
+    <style>
+        #submit{
+            /* background:red; */
+            border-radius:0px;
+            background:#198754;
+            color:white;
+        }
+    </style>
 </head>
 
 <body>
+<nav style="height:76px;" class="navbar navbar-expand-lg navbar-light bg-white py-4 fixed-top">
+        <div class="container">
+            <a class="navbar-brand d-flex justify-content-between align-items-center order-lg-0" href="index.html">
+
+                <span class="text-uppercase fw-lighter ms-2">Brews Fire</span>
+            </a>
+        </div>
+    </nav>
     <div>
         <div class="container">
             <div class="row">
@@ -53,36 +69,38 @@
                     <div class="formContainer">
                         <h2 class="p-2 text-center mb-4 h4" id="formHeading">Sign Up</h2>
                         <form  method="post" action="register.php">
-                            <div class="form-group mt-3">
-                                <label class="mb-2" for="uname">Username  <span style="color: red;">*</span></label>
-                                <input class="form-control" id="username" name="uname" type="text"
-                                    placeholder="username" required />
+                            <div class="form-group">
+                                <label class="mb-2" for="fname">First Name  <span style="color: red;">*</span></label>
+                                <input class="form-control" id="fname" name="fname" type="text"
+                                    placeholder="first name" required />
                             </div>
 
-                            <div class="form-group mt-3">
-                                <label class="mb-2" for="uname">Email  <span style="color: red;">*</span></label>
+                            <div class="form-group mt-2">
+                                <label class="mb-2" for="lname">Last Name  <span style="color: red;">*</span></label>
+                                <input class="form-control" id="lname" name="lname" type="text"
+                                    placeholder="last name" required />
+                            </div>
+
+
+                            <div class="form-group mt-2">
+                                <label class="mb-2" for="email">Email  <span style="color: red;">*</span></label>
                                 <input class="form-control" id="email" name="email" type="email"
                                     placeholder="email" required />
                             </div>
 
-                            <div class="form-group mt-3">
-                                <label class="mb-2" for="uname">Contact Number  <span style="color: red;">*</span></label>
+                            <div class="form-group mt-2">
+                                <label class="mb-2" for="contact">Contact Number  <span style="color: red;">*</span></label>
                                 <input class="form-control" id="contact" name="contact" type="text"
                                     placeholder="contact number" required />
                             </div>
 
-                            <div class="form-group mt-3">
+                            <div class="form-group mt-2">
                                 <label class="mb-2" for="psw">Create Password  <span style="color: red;">*</span></label>
                                 <input class="form-control" id="password" name="psw" placeholder="password"
                                     type="password" required />
                             </div>
 
-                            <div class="form-group mt-3">
-                                <label class="mb-2" for="psw">Confirm Password  <span style="color: red;">*</span></label>
-                                <input class="form-control" id="cpassword" name="psw" placeholder="confirm password"
-                                    type="password" required />
-                            </div>
-
+                         
                             <div class="form-group mt-1">
                                <a href="login.php">Back to login?</a>
                             </div>
@@ -107,23 +125,20 @@
     let btn = document.getElementById('submit');
 
     btn.addEventListener("click", (event) => {
-        let username = document.getElementById("username").value;
+        let fname = document.getElementById("fname").value;
+        let lname = document.getElementById("lname").value;
         let email = document.getElementById("email").value;
         let contact = document.getElementById("contact").value;
         let password = document.getElementById("password").value;
-        let cpassword = document.getElementById("cpassword").value;
+        // let cpassword = document.getElementById("cpassword").value;
 
-        if (username === "" || email === "" || contact === "" || password === "" || cpassword === "") {
+        if (fname === "" || lname==="" || email === "" || contact === "" || password === "") {
             alert("Please fill in all the required fields.");
             event.preventDefault();
         } else if (contact.length !== 10) {
             alert("Contact number should be 10 digits.");
             event.preventDefault();
         }
-        else if(password!=cpassword)
-        {
-            alert("Password And Confirm Password Should Match")
-            event.preventDefault()
-        }
+       
     });
 </script>
