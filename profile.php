@@ -112,7 +112,7 @@ if (isset($_POST['save'])) {
                     <div class="container">
                     <?php echo $updateAlert; ?>
                     </div>
-                        <div class="card">
+                        <div class="card shadow">
                             <div class="card-header bg-primary text-white text-center">
                                 <div class="">
                                     <h5 class="ms-2  text-center">My Profile</h5>

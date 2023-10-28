@@ -20,6 +20,7 @@ if (isset($_POST['login'])) {
         session_start();
         $_SESSION['id'] = $rows['id'];
         $_SESSION['fname'] = $rows['fname'];
+        $_SESSION['lname'] = $rows['lname'];
         header("location:index.php");
     } else {
 

@@ -29,8 +29,155 @@ if (isset($_SESSION['id'])) {
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
     <link rel="stylesheet" href="bootstrap-5.0.2-dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+        integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
     <!-- custom css -->
     <link rel="stylesheet" href="css/main.css">
+    <style>
+    .collection-img {
+        height: 250px;
+        /* Set a fixed height for the collection-img div */
+        overflow: hidden;
+        /* Hide any content that exceeds the fixed height */
+    }
+
+    .collection-img img {
+        object-fit: cover;
+        /* Ensure the image covers the entire div, cropping as needed */
+        width: 100%;
+        height: 100%;
+    }
+
+    #cart {
+        color: black;
+    }
+
+    #cart:hover {
+        color: #e5345b;
+    }
+
+    .myContainer {
+        width: 100%;
+        height: 70vh;
+        /* border:2px solid black; */
+        margin-top: 100px;
+    }
+
+    .myBanner {
+        width: 100%;
+        height: 70vh;
+        /* background-image: url(images/bg5.jpg); */
+        background: lightpink;
+        background-size: cover;
+        /* border:2px solid black; */
+        background-position: 69%;
+        /* border-radius: 10px; */
+        /* position: fixed; */
+        /* margin-top: 150px; */
+    }
+
+    .myBanner-Text {
+        padding-top: 100px;
+        margin-left: 50px;
+    }
+
+    .myBanner-Text h2 {
+        margin-top: 30px;
+        /* letter-spacing:10px; */
+        font-weight: bold;
+        font-size: 25px;
+    }
+
+    #myBtn {
+        border-radius: 0px;
+        border: transparent;
+        background: #e5345b;
+        color: white;
+    }
+
+    #myBtn:hover {
+        cursor: pointer;
+        color: black;
+        background: white;
+    }
+
+    a {
+        text-decoration: none;
+        color: black;
+    }
+
+    .cartBtn {
+        border-radius: 0px !important;
+        border-radius: 4px !important;
+        padding: 8px 15px !important;
+        background: #e5345b !important;
+        color: white !important;
+        border: transparent !important;
+        font-size: 15px;
+    }
+
+    .cartBtn:hover {
+        cursor: pointer !important;
+        color: black !important;
+        background: white !important;
+        border: 1px solid black !important;
+    }
+
+    .effectImg img {
+        /* -webkit-transition: all 0.3s ease; */
+        /* -o-transition: all 0.3s ease; */
+        transition: all 0.3s ease;
+    }
+
+    .effectImg:hover img {
+        /* -webkit-transform: scale(1.2); */
+        /* -ms-transform: scale(1.2); */
+        transform: scale(1.2);
+    }
+
+
+    @media (max-width:500px) {
+
+        .myContainer {
+            height: 45vh;
+        }
+
+        .myBanner {
+            margin-top: -15px;
+            height: 45vh;
+            /* background: lightpink; */
+        }
+
+        .myBanner-Text {
+            margin-left: 0px;
+        }
+
+        .myBanner-Text h2 {
+            margin-top: 0px;
+            font-size: 17px;
+            margin-left: 15px;
+        }
+
+        .myBanner-Text h5 {
+            font-size: 14px;
+            margin-left: 15px;
+        }
+
+        #myBtn {
+            margin-left: 15px;
+            border-radius: 0px;
+            padding: 2px 7px;
+        }
+
+        #collection {
+            margin-top: 20px;
+        }
+
+
+
+    }
+    </style>
 </head>
 
 <body>
@@ -43,15 +190,15 @@ if (isset($_SESSION['id'])) {
                 <span class="text-uppercase fw-lighter ms-2">Brews Fire</span>
             </a>
 
-           <?php
+            <?php
            if ($flag == 1) {
 
                echo '
             <div class="order-lg-2 nav-btns">
-            <button type="button" class="btn position-relative">
+            <a href="cart.php" id="cart" class="position-relative">
                 <i class="fa fa-shopping-cart"></i>
                 <span class="position-absolute top-0 start-100 translate-middle badge bg-primary">5</span>
-            </button>
+            </a>
             <button type="button" class="btn position-relative">
                 <i class="fa fa-search"></i>
             </button>
@@ -110,33 +257,22 @@ if (isset($_SESSION['id'])) {
             </div>
         </div>
     </nav>
+
+    <div class="myContainer">
+        <div class="myBanner">
+            <div class="myBanner-Text">
+                <h2 class="text-capitalize text-dark">Boost Your Wellness with Our Teas</h2>
+                <h5 class="text-capitalize text-dark mt-3">Up to 60% Discount On Diwali Offer</h5>
+                <a href="#" id="myBtn" class="btn btn-primary mt-4">Shop Now</a>
+            </div>
+        </div>
+    </div>
+
+
     <!-- end of navbar -->
 
     <!-- header -->
-    <header id="header" class="vh-100 carousel slide" data-bs-ride="carousel" style="padding-top: 104px;">
-       
-       <div class="container h-100 d-flex align-items-center carousel-inner">
-    <div class="text-left carousel-item active">
-        <!-- <h2 class="text-capitalize text-dark">Boost Your Wellness with Our Teas</h2>
-        <h4 class="text-capitalize py-2 fw-bold text-white">Grab Yours Before It's Gone</h4>
-        <a href="#" class="btn mt-3 text-uppercase text-dark">shop now</a> -->
-    </div>
-    <div class="text-left carousel-item">
-        <!-- <h2 class="text-capitalize text-white">best price & offer</h2>
-        <h4 class="text-capitalize py-2 fw-bold text-white">new taste</h4>
-        <a href="#" class="btn mt-3 text-uppercase">buy now</a> -->
-    </div>
-</div>
 
-
-        <button class="carousel-control-prev" type="button" data-bs-target="#header" data-bs-slide="prev">
-            <span class="carousel-control-prev-icon"></span>
-        </button>
-        <button class="carousel-control-next" type="button" data-bs-target="#header" data-bs-slide="next">
-            <span class="carousel-control-next-icon"></span>
-        </button>
-    </header>
-    <!-- end of header -->
 
     <!-- collection -->
     <section id="collection" class="py-5">
@@ -154,12 +290,17 @@ if (isset($_SESSION['id'])) {
                 </div>
 
                 <div class="collection-list mt-4 row gx-0 gy-3">
+
                     <div class="col-md-6 col-lg-4 col-xl-3 p-2 best">
-                        <div class="collection-img position-relative">
-                            <img src="images/Package2.png" class="w-100">
+                        <div class="collection-img position-relative effectImg">
+                            <a href="product.php">
+                                <img src="images/product.jpg" class="w-100">
+                            </a>
                             <span
                                 class="position-absolute bg-primary text-white d-flex align-items-center justify-content-center">sale</span>
                         </div>
+
+
                         <div class="text-center">
                             <div class="rating mt-3">
                                 <span class="text-primary"><i class="fas fa-star"></i></span>
@@ -171,11 +312,24 @@ if (isset($_SESSION['id'])) {
                             <p class="text-capitalize my-1">500 gm pkg.</p>
                             <span class="fw-bold">$ 45.50</span>
                         </div>
+
+                        <div class="row">
+                            <div class="col-12 d-flex justify-content-center">
+                                <button class="btn btn-primary text-uppercase mt-3 cartBtn">
+                                    <i class="fa-solid fa-plus"></i>&nbsp; Add To Cart
+                                </button>
+                            </div>
+                        </div>
+
+
                     </div>
 
+
                     <div class="col-md-6 col-lg-4 col-xl-3 p-2 feat">
-                        <div class="collection-img position-relative">
-                            <img src="images/product.jpg" class=" w-100">
+                        <div class="collection-img position-relative effectImg">
+                            <a href="product.php">
+                                <img src="images/Package3.png" class="w-100">
+                            </a>
                             <span
                                 class="position-absolute bg-primary text-white d-flex align-items-center justify-content-center">sale</span>
                         </div>
@@ -189,12 +343,21 @@ if (isset($_SESSION['id'])) {
                             </div>
                             <p class="text-capitalize my-1">500 gm pkg.</p>
                             <span class="fw-bold">$ 45.50</span>
+                        </div>
+                        <div class="row">
+                            <div class="col-12 d-flex justify-content-center">
+                                <button class="btn btn-primary text-uppercase mt-3 cartBtn">
+                                    <i class="fa-solid fa-plus"></i>&nbsp; Add To Cart
+                                </button>
+                            </div>
                         </div>
                     </div>
 
                     <div class="col-md-6 col-lg-4 col-xl-3 p-2 new">
-                        <div class="collection-img position-relative">
-                            <img src="images/product.jpg" class="w-100">
+                        <div class="collection-img position-relative effectImg">
+                            <a href="product.php">
+                                <img src="images/product.jpg" class="w-100">
+                            </a>
                             <span
                                 class="position-absolute bg-primary text-white d-flex align-items-center justify-content-center">sale</span>
                         </div>
@@ -208,12 +371,21 @@ if (isset($_SESSION['id'])) {
                             </div>
                             <p class="text-capitalize my-1">500 gm pkg.</p>
                             <span class="fw-bold">$ 45.50</span>
+                        </div>
+                        <div class="row">
+                            <div class="col-12 d-flex justify-content-center">
+                                <button class="btn btn-primary text-uppercase mt-3 cartBtn">
+                                    <i class="fa-solid fa-plus"></i>&nbsp; Add To Cart
+                                </button>
+                            </div>
                         </div>
                     </div>
 
                     <div class="col-md-6 col-lg-4 col-xl-3 p-2 best">
-                        <div class="collection-img position-relative">
-                            <img src="images/product.jpg" class="w-100">
+                        <div class="collection-img position-relative effectImg">
+                            <a href="product.php">
+                                <img src="images/Package3.png" class="w-100">
+                            </a>
                             <span
                                 class="position-absolute bg-primary text-white d-flex align-items-center justify-content-center">sale</span>
                         </div>
@@ -227,12 +399,21 @@ if (isset($_SESSION['id'])) {
                             </div>
                             <p class="text-capitalize my-1">500 gm pkg.</p>
                             <span class="fw-bold">$ 45.50</span>
+                        </div>
+                        <div class="row">
+                            <div class="col-12 d-flex justify-content-center">
+                                <button class="btn btn-primary text-uppercase mt-3 cartBtn">
+                                    <i class="fa-solid fa-plus"></i>&nbsp; Add To Cart
+                                </button>
+                            </div>
                         </div>
                     </div>
 
                     <div class="col-md-6 col-lg-4 col-xl-3 p-2 feat">
-                        <div class="collection-img position-relative">
-                            <img src="images/product.jpg" class="w-100">
+                    <div class="collection-img position-relative effectImg">
+                            <a href="product.php">
+                                <img src="images/Package3.png" class="w-100">
+                            </a>
                             <span
                                 class="position-absolute bg-primary text-white d-flex align-items-center justify-content-center">sale</span>
                         </div>
@@ -246,12 +427,21 @@ if (isset($_SESSION['id'])) {
                             </div>
                             <p class="text-capitalize my-1">500 gm pkg.</p>
                             <span class="fw-bold">$ 45.50</span>
+                        </div>
+                        <div class="row">
+                            <div class="col-12 d-flex justify-content-center">
+                                <button class="btn btn-primary text-uppercase mt-3 cartBtn">
+                                    <i class="fa-solid fa-plus"></i>&nbsp; Add To Cart
+                                </button>
+                            </div>
                         </div>
                     </div>
 
                     <div class="col-md-6 col-lg-4 col-xl-3 p-2 new">
-                        <div class="collection-img position-relative">
-                            <img src="images/product.jpg" class="w-100">
+                    <div class="collection-img position-relative effectImg">
+                            <a href="product.php">
+                                <img src="images/product.jpg" class="w-100">
+                            </a>
                             <span
                                 class="position-absolute bg-primary text-white d-flex align-items-center justify-content-center">sale</span>
                         </div>
@@ -265,12 +455,21 @@ if (isset($_SESSION['id'])) {
                             </div>
                             <p class="text-capitalize my-1">500 gm pkg.</p>
                             <span class="fw-bold">$ 45.50</span>
+                        </div>
+                        <div class="row">
+                            <div class="col-12 d-flex justify-content-center">
+                                <button class="btn btn-primary text-uppercase mt-3 cartBtn">
+                                    <i class="fa-solid fa-plus"></i>&nbsp; Add To Cart
+                                </button>
+                            </div>
                         </div>
                     </div>
 
                     <div class="col-md-6 col-lg-4 col-xl-3 p-2 best">
-                        <div class="collection-img position-relative">
-                            <img src="images/Package1.png" class="w-100">
+                    <div class="collection-img position-relative effectImg">
+                            <a href="product.php">
+                                <img src="images/Package3.png" class="w-100">
+                            </a>
                             <span
                                 class="position-absolute bg-primary text-white d-flex align-items-center justify-content-center">sale</span>
                         </div>
@@ -284,12 +483,21 @@ if (isset($_SESSION['id'])) {
                             </div>
                             <p class="text-capitalize my-1">500 gm pkg.</p>
                             <span class="fw-bold">$ 45.50</span>
+                        </div>
+                        <div class="row">
+                            <div class="col-12 d-flex justify-content-center">
+                                <button class="btn btn-primary text-uppercase mt-3 cartBtn">
+                                    <i class="fa-solid fa-plus"></i>&nbsp; Add To Cart
+                                </button>
+                            </div>
                         </div>
                     </div>
 
                     <div class="col-md-6 col-lg-4 col-xl-3 p-2 feat">
-                        <div class="collection-img position-relative">
-                            <img src="images/product.jpg" class="w-100">
+                    <div class="collection-img position-relative effectImg">
+                            <a href="product.php">
+                                <img src="images/product.jpg" class="w-100">
+                            </a>
                             <span
                                 class="position-absolute bg-primary text-white d-flex align-items-center justify-content-center">sale</span>
                         </div>
@@ -303,6 +511,13 @@ if (isset($_SESSION['id'])) {
                             </div>
                             <p class="text-capitalize my-1">500 gm pkg.</p>
                             <span class="fw-bold">$ 45.50</span>
+                        </div>
+                        <div class="row">
+                            <div class="col-12 d-flex justify-content-center">
+                                <button class="btn btn-primary text-uppercase mt-3 cartBtn">
+                                    <i class="fa-solid fa-plus"></i>&nbsp; Add To Cart
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -330,7 +545,13 @@ if (isset($_SESSION['id'])) {
                     <div class="text-center">
                         <p class="text-capitalize mt-3 mb-1">500 gm pkg.</p>
                         <span class="fw-bold d-block">$ 45.50</span>
-                        <a href="#" class="btn btn-primary mt-3">Add to Cart</a>
+                        <div class="row">
+                            <div class="col-12 d-flex justify-content-center">
+                                <button class="btn btn-primary text-uppercase mt-3 cartBtn">
+                                    <i class="fa-solid fa-plus"></i>&nbsp; Add To Cart
+                                </button>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
@@ -345,7 +566,13 @@ if (isset($_SESSION['id'])) {
                     <div class="text-center">
                         <p class="text-capitalize mt-3 mb-1">500 gm pkg.</p>
                         <span class="fw-bold d-block">$ 45.50</span>
-                        <a href="#" class="btn btn-primary mt-3">Add to Cart</a>
+                        <div class="row">
+                            <div class="col-12 d-flex justify-content-center">
+                                <button class="btn btn-primary text-uppercase mt-3 cartBtn">
+                                    <i class="fa-solid fa-plus"></i>&nbsp; Add To Cart
+                                </button>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
@@ -360,7 +587,13 @@ if (isset($_SESSION['id'])) {
                     <div class="text-center">
                         <p class="text-capitalize mt-3 mb-1">500 gm pkg.</p>
                         <span class="fw-bold d-block">$ 45.50</span>
-                        <a href="#" class="btn btn-primary mt-3">Add to Cart</a>
+                        <div class="row">
+                            <div class="col-12 d-flex justify-content-center">
+                                <button class="btn btn-primary text-uppercase mt-3 cartBtn">
+                                    <i class="fa-solid fa-plus"></i>&nbsp; Add To Cart
+                                </button>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
@@ -375,7 +608,13 @@ if (isset($_SESSION['id'])) {
                     <div class="text-center">
                         <p class="text-capitalize mt-3 mb-1">500 gm pkg.</p>
                         <span class="fw-bold d-block">$ 45.50</span>
-                        <a href="#" class="btn btn-primary mt-3">Add to Cart</a>
+                        <div class="row">
+                            <div class="col-12 d-flex justify-content-center">
+                                <button class="btn btn-primary text-uppercase mt-3 cartBtn">
+                                    <i class="fa-solid fa-plus"></i>&nbsp; Add To Cart
+                                </button>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
