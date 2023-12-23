@@ -91,6 +91,14 @@ if (isset($_SESSION['id'])) {
         border: transparent;
     }
 
+    #clear {
+        border-radius: 0px;
+        padding: 4px 9px;
+        background: #e64848;
+        color: white;
+        border: transparent;
+    }
+
     #checkout:hover {
         background: #e5345b;
     }
@@ -225,13 +233,29 @@ if (isset($_SESSION['id'])) {
             </a>
 
             <?php
+            $cQuery = "SELECT COUNT(*) as count FROM `cart`";
+            $cRes = mysqli_query($con, $cQuery);
+            if ($cRes->num_rows > 0) {
+                // Fetch the result as an associative array
+                $row = $cRes->fetch_assoc();
+
+                // Get the count value
+                $rowCount = $row['count'];
+
+                // echo "Number of rows in the table: " . $rowCount;
+            } else {
+                // echo "No rows found";
+                $rowCount = 0;
+            }
             if ($flag == 1) {
 
                 echo '
             <div class="order-lg-2 nav-btns">
             <a href="cart.php" id="cart" class="position-relative">
                 <i class="fa fa-shopping-cart"></i>
-                <span class="position-absolute top-0 start-100 translate-middle badge bg-primary">5</span>
+                <span class="position-absolute top-0 start-100 translate-middle badge bg-primary">
+                ' . $rowCount . '
+                </span>
             </a>
             <button type="button" class="btn position-relative">
                 <i class="fa fa-search"></i>
@@ -292,26 +316,30 @@ if (isset($_SESSION['id'])) {
         </div>
     </nav>
 
-    <div class="container-fluid mainContainer">
+    <div class="container-fluid mainContainer d-flex justify-content-between align-items-center">
         <!-- <img src="" class="img-fluid" alt=""> -->
         <ul class="list-group">
-
             <li class="list-group-item list-group-item-action">
                 <i class="fa fa-user"><span>&nbsp;</span></i>
-                <?php
-                echo $fname . ' ' . $lname;
-                ?>
+                <?php echo $fname . ' ' . $lname; ?>
             </li>
 
-
         </ul>
+
+        <a href="deleteFullCart.php" class="btn btn-primary" id="clear">
+            CLEAR CART
+        </a>
     </div>
+
+
+
+
 
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-10 col-11 mx-auto">
 
-                <div class="row mt-5 gx-3">
+                <div class="row mt-2 gx-3">
 
                     <div class="col-md-12 col-lg-8 col-11 mx-auto main_cart mb-lg-0 mb-5">
 
@@ -343,12 +371,12 @@ if (isset($_SESSION['id'])) {
 
                             $name = $pRow['name'];
                             // $originalPrice=$pRow['price'];
+                        
 
-                            
-                            
 
-                            
-                            
+
+
+
 
 
                             $itemSum += $price;
@@ -366,7 +394,7 @@ if (isset($_SESSION['id'])) {
                                         <div class="col-md-6 col-11 card-title">
                                             <h5 class="product_name mt-md-0 mt-3">' . $name . '</h5>
                                             <p class="mb-2">Weight: ' . $wg . ' </p>
-                                            <p class="mb-2">Price (pc.): ' . $originalPrice . ' </p>
+                                            <p class="mb-2">Price (pc.): ₹' . $originalPrice . ' </p>
                                             <p class="mb-3">Final Price: ₹' . $price . '</p>
 
                                         </div>
@@ -430,9 +458,9 @@ if (isset($_SESSION['id'])) {
                                 <p>Total Amount(Inc. all taxes)</p>
                                 <p>₹<span><?php echo $itemSum + $shippingCost; ?></span></p>
                             </div>
-                            <button id="checkout" class="btn btn-primary text-uppercase">
+                            <a id="checkout" href="checkout.php" class="btn btn-primary text-uppercase">
                                 Checkout
-                            </button>
+                            </a>
 
                         </div>
 
