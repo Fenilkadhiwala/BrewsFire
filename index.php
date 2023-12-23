@@ -1,4 +1,6 @@
 <?php
+include "./connection/connectAdmin.php";
+
 session_start();
 if (isset($_SESSION['id'])) {
 
@@ -191,9 +193,9 @@ if (isset($_SESSION['id'])) {
             </a>
 
             <?php
-           if ($flag == 1) {
+            if ($flag == 1) {
 
-               echo '
+                echo '
             <div class="order-lg-2 nav-btns">
             <a href="cart.php" id="cart" class="position-relative">
                 <i class="fa fa-shopping-cart"></i>
@@ -205,8 +207,8 @@ if (isset($_SESSION['id'])) {
 
         </div>
             ';
-           }
-           ?>
+            }
+            ?>
 
             <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu">
                 <span class="navbar-toggler-icon"></span>
@@ -291,235 +293,85 @@ if (isset($_SESSION['id'])) {
 
                 <div class="collection-list mt-4 row gx-0 gy-3">
 
-                    <div class="col-md-6 col-lg-4 col-xl-3 p-2 best">
-                        <div class="collection-img position-relative effectImg">
-                            <a href="product.php">
-                                <img src="images/product.jpg" class="w-100">
-                            </a>
-                            <span
-                                class="position-absolute bg-primary text-white d-flex align-items-center justify-content-center">sale</span>
-                        </div>
+                    <?php
+
+                    $path = "../Brews_Fire_Admin/uploads";
+
+                    $queryItems = "SELECT * FROM `products`";
+
+                    $resultItems = mysqli_query($conAdmin, $queryItems);
 
 
-                        <div class="text-center">
-                            <div class="rating mt-3">
-                                <span class="text-primary"><i class="fas fa-star"></i></span>
-                                <span class="text-primary"><i class="fas fa-star"></i></span>
-                                <span class="text-primary"><i class="fas fa-star"></i></span>
-                                <span class="text-primary"><i class="fas fa-star"></i></span>
-                                <span class="text-primary"><i class="fas fa-star"></i></span>
-                            </div>
-                            <p class="text-capitalize my-1">500 gm pkg.</p>
-                            <span class="fw-bold">$ 45.50</span>
-                        </div>
 
-                        <div class="row">
-                            <div class="col-12 d-flex justify-content-center">
-                                <button class="btn btn-primary text-uppercase mt-3 cartBtn">
-                                    <i class="fa-solid fa-plus"></i>&nbsp; Add To Cart
-                                </button>
-                            </div>
-                        </div>
+                    while ($products = mysqli_fetch_assoc($resultItems)) {
+                        $id = $products['id'];
+                        $name = $products['name'];
+                        $price = $products['price'];
+                        $weight = $products['weight'];
+                        $quant = $products['quantity'];
+                        $img = $products['images'];
 
 
-                    </div>
+                        $priceArr = explode(",", $price);
+                        $weightArr = explode(",", $weight);
+                        $quantArr = explode(",", $quant);
+                        $imgArr = explode(",", $img);
 
 
-                    <div class="col-md-6 col-lg-4 col-xl-3 p-2 feat">
-                        <div class="collection-img position-relative effectImg">
-                            <a href="product.php">
-                                <img src="images/Package3.png" class="w-100">
-                            </a>
-                            <span
-                                class="position-absolute bg-primary text-white d-flex align-items-center justify-content-center">sale</span>
-                        </div>
-                        <div class="text-center">
-                            <div class="rating mt-3">
-                                <span class="text-primary"><i class="fas fa-star"></i></span>
-                                <span class="text-primary"><i class="fas fa-star"></i></span>
-                                <span class="text-primary"><i class="fas fa-star"></i></span>
-                                <span class="text-primary"><i class="fas fa-star"></i></span>
-                                <span class="text-primary"><i class="fas fa-star"></i></span>
-                            </div>
-                            <p class="text-capitalize my-1">500 gm pkg.</p>
-                            <span class="fw-bold">$ 45.50</span>
-                        </div>
-                        <div class="row">
-                            <div class="col-12 d-flex justify-content-center">
-                                <button class="btn btn-primary text-uppercase mt-3 cartBtn">
-                                    <i class="fa-solid fa-plus"></i>&nbsp; Add To Cart
-                                </button>
-                            </div>
-                        </div>
-                    </div>
+                        for ($i = 0; $i < count($weightArr); $i++) {
+                            echo '
+                            <div class="col-md-6 col-lg-4 col-xl-3 p-2 best">
+                            <div class="collection-img position-relative effectImg">';
+                            ?>
+                    <a
+                        href="product.php?pwid=<?= $id ?>&spPrice=<?= $priceArr[$i] ?>&spWeight=<?= $weightArr[$i] ?>&spQuant=<?= $quantArr[$i] ?>&spImg=<?= $imgArr[$i] ?>">
+                        <img src="../Brews_Fire_Admin/uploads/<?= $imgArr[$i] ?>" class="w-100">
+                    </a>
 
-                    <div class="col-md-6 col-lg-4 col-xl-3 p-2 new">
-                        <div class="collection-img position-relative effectImg">
-                            <a href="product.php">
-                                <img src="images/product.jpg" class="w-100">
-                            </a>
-                            <span
-                                class="position-absolute bg-primary text-white d-flex align-items-center justify-content-center">sale</span>
-                        </div>
-                        <div class="text-center">
-                            <div class="rating mt-3">
-                                <span class="text-primary"><i class="fas fa-star"></i></span>
-                                <span class="text-primary"><i class="fas fa-star"></i></span>
-                                <span class="text-primary"><i class="fas fa-star"></i></span>
-                                <span class="text-primary"><i class="fas fa-star"></i></span>
-                                <span class="text-primary"><i class="fas fa-star"></i></span>
+                    <?php
+                                                    echo '
+                                <span
+                                    class="position-absolute bg-primary text-white d-flex align-items-center justify-content-center">sale</span>
                             </div>
-                            <p class="text-capitalize my-1">500 gm pkg.</p>
-                            <span class="fw-bold">$ 45.50</span>
-                        </div>
-                        <div class="row">
-                            <div class="col-12 d-flex justify-content-center">
-                                <button class="btn btn-primary text-uppercase mt-3 cartBtn">
-                                    <i class="fa-solid fa-plus"></i>&nbsp; Add To Cart
-                                </button>
+    
+    
+                            <div class="text-center">
+                                <div class="rating mt-3">
+                                    <span class="text-primary"><i class="fas fa-star"></i></span>
+                                    <span class="text-primary"><i class="fas fa-star"></i></span>
+                                    <span class="text-primary"><i class="fas fa-star"></i></span>
+                                    <span class="text-primary"><i class="fas fa-star"></i></span>
+                                    <span class="text-primary"><i class="fas fa-star"></i></span>
+                                </div>
+                                <p class="text-capitalize my-1 fw-bold">' . $name . '</p>
+                                <span class="">₹ ' . $priceArr[$i] . ' (' . $weightArr[$i] . ')</span>
                             </div>
+    
+                            <div class="row">
+                                <div class="col-12 d-flex justify-content-center">
+                                    <a href="addCart.php?pwid=' . $id . '&cid=' . $uid . '&spWeight=' . $weightArr[$i] . '&spPrice=' . $priceArr[$i] . '&spImg=' . $imgArr[$i] . '" class="btn btn-primary text-uppercase mt-3 cartBtn">
+                                        <i class="fa-solid fa-plus"></i>&nbsp; Add To Cart
+                                    </a>
+                                </div>
+                            </div>
+    
+    
                         </div>
-                    </div>
+                        ';
 
-                    <div class="col-md-6 col-lg-4 col-xl-3 p-2 best">
-                        <div class="collection-img position-relative effectImg">
-                            <a href="product.php">
-                                <img src="images/Package3.png" class="w-100">
-                            </a>
-                            <span
-                                class="position-absolute bg-primary text-white d-flex align-items-center justify-content-center">sale</span>
-                        </div>
-                        <div class="text-center">
-                            <div class="rating mt-3">
-                                <span class="text-primary"><i class="fas fa-star"></i></span>
-                                <span class="text-primary"><i class="fas fa-star"></i></span>
-                                <span class="text-primary"><i class="fas fa-star"></i></span>
-                                <span class="text-primary"><i class="fas fa-star"></i></span>
-                                <span class="text-primary"><i class="fas fa-star"></i></span>
-                            </div>
-                            <p class="text-capitalize my-1">500 gm pkg.</p>
-                            <span class="fw-bold">$ 45.50</span>
-                        </div>
-                        <div class="row">
-                            <div class="col-12 d-flex justify-content-center">
-                                <button class="btn btn-primary text-uppercase mt-3 cartBtn">
-                                    <i class="fa-solid fa-plus"></i>&nbsp; Add To Cart
-                                </button>
-                            </div>
-                        </div>
-                    </div>
+                        }
 
-                    <div class="col-md-6 col-lg-4 col-xl-3 p-2 feat">
-                    <div class="collection-img position-relative effectImg">
-                            <a href="product.php">
-                                <img src="images/Package3.png" class="w-100">
-                            </a>
-                            <span
-                                class="position-absolute bg-primary text-white d-flex align-items-center justify-content-center">sale</span>
-                        </div>
-                        <div class="text-center">
-                            <div class="rating mt-3">
-                                <span class="text-primary"><i class="fas fa-star"></i></span>
-                                <span class="text-primary"><i class="fas fa-star"></i></span>
-                                <span class="text-primary"><i class="fas fa-star"></i></span>
-                                <span class="text-primary"><i class="fas fa-star"></i></span>
-                                <span class="text-primary"><i class="fas fa-star"></i></span>
-                            </div>
-                            <p class="text-capitalize my-1">500 gm pkg.</p>
-                            <span class="fw-bold">$ 45.50</span>
-                        </div>
-                        <div class="row">
-                            <div class="col-12 d-flex justify-content-center">
-                                <button class="btn btn-primary text-uppercase mt-3 cartBtn">
-                                    <i class="fa-solid fa-plus"></i>&nbsp; Add To Cart
-                                </button>
-                            </div>
-                        </div>
-                    </div>
 
-                    <div class="col-md-6 col-lg-4 col-xl-3 p-2 new">
-                    <div class="collection-img position-relative effectImg">
-                            <a href="product.php">
-                                <img src="images/product.jpg" class="w-100">
-                            </a>
-                            <span
-                                class="position-absolute bg-primary text-white d-flex align-items-center justify-content-center">sale</span>
-                        </div>
-                        <div class="text-center">
-                            <div class="rating mt-3">
-                                <span class="text-primary"><i class="fas fa-star"></i></span>
-                                <span class="text-primary"><i class="fas fa-star"></i></span>
-                                <span class="text-primary"><i class="fas fa-star"></i></span>
-                                <span class="text-primary"><i class="fas fa-star"></i></span>
-                                <span class="text-primary"><i class="fas fa-star"></i></span>
-                            </div>
-                            <p class="text-capitalize my-1">500 gm pkg.</p>
-                            <span class="fw-bold">$ 45.50</span>
-                        </div>
-                        <div class="row">
-                            <div class="col-12 d-flex justify-content-center">
-                                <button class="btn btn-primary text-uppercase mt-3 cartBtn">
-                                    <i class="fa-solid fa-plus"></i>&nbsp; Add To Cart
-                                </button>
-                            </div>
-                        </div>
-                    </div>
 
-                    <div class="col-md-6 col-lg-4 col-xl-3 p-2 best">
-                    <div class="collection-img position-relative effectImg">
-                            <a href="product.php">
-                                <img src="images/Package3.png" class="w-100">
-                            </a>
-                            <span
-                                class="position-absolute bg-primary text-white d-flex align-items-center justify-content-center">sale</span>
-                        </div>
-                        <div class="text-center">
-                            <div class="rating mt-3">
-                                <span class="text-primary"><i class="fas fa-star"></i></span>
-                                <span class="text-primary"><i class="fas fa-star"></i></span>
-                                <span class="text-primary"><i class="fas fa-star"></i></span>
-                                <span class="text-primary"><i class="fas fa-star"></i></span>
-                                <span class="text-primary"><i class="fas fa-star"></i></span>
-                            </div>
-                            <p class="text-capitalize my-1">500 gm pkg.</p>
-                            <span class="fw-bold">$ 45.50</span>
-                        </div>
-                        <div class="row">
-                            <div class="col-12 d-flex justify-content-center">
-                                <button class="btn btn-primary text-uppercase mt-3 cartBtn">
-                                    <i class="fa-solid fa-plus"></i>&nbsp; Add To Cart
-                                </button>
-                            </div>
-                        </div>
-                    </div>
 
-                    <div class="col-md-6 col-lg-4 col-xl-3 p-2 feat">
-                    <div class="collection-img position-relative effectImg">
-                            <a href="product.php">
-                                <img src="images/product.jpg" class="w-100">
-                            </a>
-                            <span
-                                class="position-absolute bg-primary text-white d-flex align-items-center justify-content-center">sale</span>
-                        </div>
-                        <div class="text-center">
-                            <div class="rating mt-3">
-                                <span class="text-primary"><i class="fas fa-star"></i></span>
-                                <span class="text-primary"><i class="fas fa-star"></i></span>
-                                <span class="text-primary"><i class="fas fa-star"></i></span>
-                                <span class="text-primary"><i class="fas fa-star"></i></span>
-                                <span class="text-primary"><i class="fas fa-star"></i></span>
-                            </div>
-                            <p class="text-capitalize my-1">500 gm pkg.</p>
-                            <span class="fw-bold">$ 45.50</span>
-                        </div>
-                        <div class="row">
-                            <div class="col-12 d-flex justify-content-center">
-                                <button class="btn btn-primary text-uppercase mt-3 cartBtn">
-                                    <i class="fa-solid fa-plus"></i>&nbsp; Add To Cart
-                                </button>
-                            </div>
-                        </div>
-                    </div>
+
+
+                    }
+
+
+                    ?>
+
+
                 </div>
             </div>
         </div>

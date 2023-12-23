@@ -1,4 +1,6 @@
 <?php
+include "./connection/connect.php";
+include "./connection/connectAdmin.php";
 session_start();
 if (isset($_SESSION['id'])) {
 
@@ -14,9 +16,6 @@ if (isset($_SESSION['id'])) {
 
 
 ?>
-
-
-
 
 <!DOCTYPE html>
 <html lang="en">
@@ -311,23 +310,53 @@ if (isset($_SESSION['id'])) {
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-10 col-11 mx-auto">
+
                 <div class="row mt-5 gx-3">
+
                     <div class="col-md-12 col-lg-8 col-11 mx-auto main_cart mb-lg-0 mb-5">
+
+                        <?php
+
+                        $cartQuery = "SELECT * FROM `cart` WHERE cust_id=$uid";
+
+                        $cartRes = mysqli_query($con, $cartQuery);
+                        $itemSum = 0;
+                        $shippingCost = 40;
+                        $defaultQuant = 1;
+
+                        while ($rows = mysqli_fetch_assoc($cartRes)) {
+
+
+                            $id = $rows['id'];
+                            $cid = $rows['cust_id'];
+                            $pid = $rows['product_id'];
+                            $wg = $rows['spWeight'];
+                            $price = $rows['spPrice'];
+                            $cartImg = $rows['spImg'];
+
+                            $pQuery = "SELECT name FROM `products` WHERE id=$pid";
+
+                            $pRes = mysqli_query($conAdmin, $pQuery);
+                            $pRow = mysqli_fetch_assoc($pRes);
+
+                            $name = $pRow['name'];
+
+                            $itemSum += $price * $defaultQuant;
+
+                            echo '
                         <div class="card p-4 shadow">
-                            <h2 class="py-4 font-weight-bold">
-                                Your Cart
-                            </h2>
+
                             <div class="row">
                                 <div
                                     class="col-md-5 col-11 mx-auto bg-light d-flex justify-content-center align-items-center product_img shadow">
-                                    <img src="images/Package2.png" alt="Product" class="img-fluid">
+                                    <img src="../Brews_Fire_Admin/uploads/' . $cartImg . '" alt="Product" class="img-fluid">
                                 </div>
                                 <div class="col-md-7 col-11 mx-auto px-4 mt-2">
                                     <div class="row">
                                         <div class="col-md-6 col-11 card-title">
-                                            <h5 class="product_name mt-md-0 mt-3">CTC Tea</h5>
-                                            <p class="mb-2">Flavour: Mint</p>
-                                            <p class="mb-3">Price: 399$</p>
+                                            <h5 class="product_name mt-md-0 mt-3">' . $name . '</h5>
+                                            <p class="mb-2">Weight: ' . $wg . ' </p>
+                                            <p class="mb-3">Price: ₹' . $price . '</p>
 
 
                                         </div>
@@ -335,11 +364,11 @@ if (isset($_SESSION['id'])) {
                                         <div class="col-md-6 col-11">
                                             <ul class="pagination quantity_product">
                                                 <li class="page-item">
-                                                    <button class="page-link plusBtn">+</button>
+                                                    <button onclick="incDef(' . $defaultQuant . ')" class="page-link plusBtn">+</button>
                                                 </li>
                                                 <li class="page-item">
-                                                    <input style="width:50px;" class="page-link fieldVal" type="text"
-                                                        value="1" />
+                                                    <input style="width:50px;" class="page-link fieldVal" id="quant" type="text"
+                                                        value="' . $defaultQuant . '" />
                                                 </li>
                                                 <li class="page-item">
                                                     <button class="page-link minusBtn">-</button>
@@ -350,10 +379,10 @@ if (isset($_SESSION['id'])) {
 
                                     <div class="row mt-md-5 mt-3">
                                         <div class="col-md-6 col-11">
-                                            <p><i class="fas fa-trash" id="del"></i> &nbsp;Remove Item</p>
+                                            <p><a href="deleteCart.php?itemId=' . $id . '"><i class="fas fa-trash" id="del"></i></a> &nbsp;Remove Item</p>
                                         </div>
                                         <div class="col-md-6 col-11">
-                                            <p><i class="fas fa-heart" id="heart"></i> &nbsp;Add To Wishlist</p>
+                                            <p><a href="deleteCart.php"?itemId=' . $id . '"><i class="fas fa-heart" id="heart"></i></a> &nbsp;Add To Wishlist</p>
                                         </div>
                                     </div>
                                 </div>
@@ -361,53 +390,12 @@ if (isset($_SESSION['id'])) {
                             </div>
 
 
-                        </div>
-                        <div class="card p-4 shadow">
-                            <div class="row">
-                                <div
-                                    class="col-md-5 col-11 mx-auto bg-light d-flex justify-content-center align-items-center product_img shadow">
-                                    <img src="images/Package3.png" alt="Product" class="img-fluid">
-                                </div>
-                                <div class="col-md-7 col-11 mx-auto px-4 mt-2">
-                                    <div class="row">
-                                        <div class="col-md-6 col-11 card-title">
-                                            <h5 class="product_name mt-md-0 mt-3">CTC Tea</h5>
-                                            <p class="mb-2">Flavour: Mint</p>
-                                            <p class="mb-3">Price: 399$</p>
+                        </div>';
+                        }
+
+                        ?>
 
 
-                                        </div>
-
-                                        <div class="col-md-6 col-11">
-                                            <ul class="pagination quantity_product">
-                                                <li class="page-item">
-                                                    <button class="page-link plusBtn">+</button>
-                                                </li>
-                                                <li class="page-item">
-                                                    <input style="width:50px;" class="page-link fieldVal" type="text"
-                                                        value="1" />
-                                                </li>
-                                                <li class="page-item">
-                                                    <button class="page-link minusBtn">-</button>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                    </div>
-
-                                    <div class="row mt-md-5 mt-3">
-                                        <div class="col-md-6 col-11">
-                                            <p><i class="fas fa-trash" id="del"></i> &nbsp;Remove Item</p>
-                                        </div>
-                                        <div class="col-md-6 col-11">
-                                            <p><i class="fas fa-heart" id="heart"></i> &nbsp;Add To Wishlist</p>
-                                        </div>
-                                    </div>
-                                </div>
-
-                            </div>
-
-
-                        </div>
                     </div>
 
                     <div class="col-md-12 col-lg-4 col-11 mx-auto mt-lg-0 mt-md-5">
@@ -417,18 +405,18 @@ if (isset($_SESSION['id'])) {
                             <hr class="mb-3">
 
                             <div class="price d-flex justify-content-between">
-                                <p>Product Amount</p>
-                                <p>$<span>0.00</span></p>
+                                <p>Products Amount</p>
+                                <p id="totalAmt">₹<span><?php echo $itemSum; ?></span></p>
                             </div>
                             <div class="price d-flex justify-content-between">
                                 <p>Shipping Amount</p>
-                                <p>$<span>0.00</span></p>
+                                <p>₹<span><?php echo $shippingCost; ?></span></p>
                             </div>
 
                             <hr class="mb-3">
                             <div class="price d-flex justify-content-between font-weight-bold">
                                 <p>Total Amount(Inc. all taxes)</p>
-                                <p>$<span>0.00</span></p>
+                                <p>₹<span><?php echo $itemSum + $shippingCost; ?></span></p>
                             </div>
                             <button id="checkout" class="btn btn-primary text-uppercase">
                                 Checkout
@@ -462,6 +450,9 @@ if (isset($_SESSION['id'])) {
 let pluss = document.querySelectorAll('.plusBtn')
 let minuss = document.querySelectorAll('.minusBtn')
 let fields = document.querySelectorAll('.fieldVal')
+let totalAmt = document.getElementById('totalAmt');
+
+
 
 
 pluss.forEach(pBtn => {
@@ -489,6 +480,11 @@ minuss.forEach(mBtn => {
         }
     })
 })
+
+const incDef=(defVal)=>{
+   
+}
+
 </script>
 
 </html>

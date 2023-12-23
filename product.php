@@ -1,4 +1,6 @@
 <?php
+include "./connection/connectAdmin.php";
+
 session_start();
 if (isset($_SESSION['id'])) {
 
@@ -12,7 +14,27 @@ if (isset($_SESSION['id'])) {
     $flag = 0;
 }
 
+if (isset($_GET['pwid']) && isset($_GET['spWeight']) && isset($_GET['spPrice']) && isset($_GET['spQuant']) && isset($_GET['spImg'])) {
 
+    $pwid = $_GET['pwid'];
+    $spWeight = $_GET['spWeight'];
+    $spPrice = $_GET['spPrice'];
+    $spQuant = $_GET['spQuant'];
+    $spImg = $_GET['spImg'];
+}
+
+$prosuctQuery = "SELECT * FROM `products` WHERE id=$pwid";
+$prosuctRes = mysqli_query($conAdmin, $prosuctQuery);
+
+$row = mysqli_fetch_assoc($prosuctRes);
+
+$name = $row['name'];
+$loc = $row['location'];
+$desc = $row['description'];
+$quant = $row['quantity'];
+$img = $row['images'];
+
+// $path = "../Brews_Fire_Admin/uploads";
 ?>
 
 <!DOCTYPE html>
@@ -145,21 +167,30 @@ if (isset($_SESSION['id'])) {
         <div class="">
             <div class="row">
                 <div class="col-md-6 col-11 shadow mx-auto productImg">
-                    <img src="images/Package3.png" alt="" class="img-fluid">
+                <img src="../Brews_Fire_Admin/uploads/<?php echo $spImg; ?>" class="w-100">
                 </div>
                 <div class="col-md-6 col-11 mx-auto">
                     <div class="card-title mt-md-5 mt-5  d-flex justify-content-center">
-                        <h2>Brews Fire CTC Tea</h2>
+                        <h2>
+                            <?php echo $name; ?>
+                        </h2>
                     </div>
 
                     <div class="row m-5">
                         <div class="col-12 mx-auto">
-                            <p><b>Ingredients:</b>&nbsp;Lorem, ipsum dolor sit amet consectetur.
+                            <p><b>Ingredients:</b>&nbsp;<?php echo $desc; ?>
                             </p>
 
-                            <p><b>Price:</b>&nbsp;<strike style="color:red;">$299</strike>&nbsp;$199
+                            <p><b>Price:</b>&nbsp;<strike style="color:red;">₹299</strike>&nbsp;<?php echo $spPrice; ?>
                             </p>
-                            <p><b>Mfg.:</b>&nbsp; Assam, India</p>
+                            <p><b>Mfg.:</b>&nbsp; <?php echo $loc; ?></p>
+                            <?php
+                            if ($quant < 1) {
+                                echo '<p style="color:red;"><b>Remaining.:</b>&nbsp; Currently Out Of Stock</p>';
+                            } else {
+                                echo '<p><b>Remaining.:</b>&nbsp; ' . $spQuant . '</p>';
+                            }
+                            ?>
                             <button class="btn btn-primary text-uppercase" id="cartBtn">
                                 <i class="fas fa-plus"></i> Add to cart
                             </button>
