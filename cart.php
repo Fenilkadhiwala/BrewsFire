@@ -330,18 +330,28 @@ if (isset($_SESSION['id'])) {
                             $id = $rows['id'];
                             $cid = $rows['cust_id'];
                             $pid = $rows['product_id'];
+                            $qty = $rows['qty'];
                             $wg = $rows['spWeight'];
                             $price = $rows['spPrice'];
+                            $originalPrice = $rows['originalPrice'];
                             $cartImg = $rows['spImg'];
 
-                            $pQuery = "SELECT name FROM `products` WHERE id=$pid";
+                            $pQuery = "SELECT * FROM `products` WHERE id=$pid";
 
                             $pRes = mysqli_query($conAdmin, $pQuery);
                             $pRow = mysqli_fetch_assoc($pRes);
 
                             $name = $pRow['name'];
+                            // $originalPrice=$pRow['price'];
 
-                            $itemSum += $price * $defaultQuant;
+                            
+                            
+
+                            
+                            
+
+
+                            $itemSum += $price;
 
                             echo '
                         <div class="card p-4 shadow">
@@ -356,19 +366,21 @@ if (isset($_SESSION['id'])) {
                                         <div class="col-md-6 col-11 card-title">
                                             <h5 class="product_name mt-md-0 mt-3">' . $name . '</h5>
                                             <p class="mb-2">Weight: ' . $wg . ' </p>
-                                            <p class="mb-3">Price: ₹' . $price . '</p>
-
+                                            <p class="mb-2">Price (pc.): ' . $originalPrice . ' </p>
+                                            <p class="mb-3">Final Price: ₹' . $price . '</p>
 
                                         </div>
 
                                         <div class="col-md-6 col-11">
                                             <ul class="pagination quantity_product">
                                                 <li class="page-item">
-                                                    <button onclick="incDef(' . $defaultQuant . ')" class="page-link plusBtn">+</button>
+                                                    <button class="page-link plusBtn">+</button>
                                                 </li>
+                                                <input type="hidden" class="itemId" value="' . $id . '"/>
+                                                <input type="hidden" class="itemPrice" value="' . $originalPrice . '"/>
                                                 <li class="page-item">
                                                     <input style="width:50px;" class="page-link fieldVal" id="quant" type="text"
-                                                        value="' . $defaultQuant . '" />
+                                                        value="' . $qty . '" />
                                                 </li>
                                                 <li class="page-item">
                                                     <button class="page-link minusBtn">-</button>
@@ -446,7 +458,71 @@ if (isset($_SESSION['id'])) {
 
 </body>
 
+
+<script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js'></script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/js/bootstrap.min.js'></script>
+
 <script>
+$(document).ready(() => {
+
+    $(".plusBtn").on("click", function() {
+
+        var $el = $(this).closest('ul');
+
+        var itemId = $el.find('.itemId').val()
+        var itemPrice = $el.find('.itemPrice').val()
+        var itemQty = $el.find('.fieldVal').val()
+
+        location.reload(true)
+
+
+        $.ajax({
+            url: 'action.php',
+            method: 'post',
+            cache: false,
+            data: {
+                itemId: itemId,
+                itemPrice: itemPrice,
+                itemQty: itemQty
+            },
+            success: function(res) {
+                console.log(res);
+            }
+        })
+    })
+
+    $(".minusBtn").on("click", function() {
+        // console.log("- Clicked");
+
+        var $el = $(this).closest('ul');
+
+        var itemId = $el.find('.itemId').val()
+        var itemPrice = $el.find('.itemPrice').val()
+        var itemQty = $el.find('.fieldVal').val()
+
+        // console.log(itemId);
+
+        location.reload(true)
+
+
+        $.ajax({
+            url: 'action.php',
+            method: 'post',
+            cache: false,
+            data: {
+                itemId: itemId,
+                itemPrice: itemPrice,
+                itemQty: itemQty
+            },
+            success: function(res) {
+                console.log(res);
+            }
+        })
+    })
+
+})
+
+
 let pluss = document.querySelectorAll('.plusBtn')
 let minuss = document.querySelectorAll('.minusBtn')
 let fields = document.querySelectorAll('.fieldVal')
@@ -480,11 +556,6 @@ minuss.forEach(mBtn => {
         }
     })
 })
-
-const incDef=(defVal)=>{
-   
-}
-
 </script>
 
 </html>

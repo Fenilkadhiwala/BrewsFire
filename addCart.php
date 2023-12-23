@@ -3,6 +3,7 @@
 if (isset($_GET['pwid']) && isset($_GET['cid']) && isset($_GET['spWeight']) && isset($_GET['spPrice']) && isset($_GET['spImg'])) {
     $pwid = $_GET['pwid'];
     $cid = $_GET['cid'];
+    $qty=1;
     $spWeight = $_GET['spWeight'];
     $spPrice = $_GET['spPrice'];
     $spImg = $_GET['spImg'];
@@ -10,7 +11,7 @@ if (isset($_GET['pwid']) && isset($_GET['cid']) && isset($_GET['spWeight']) && i
 
 include "./connection/connect.php";
 
-$cartQuery = "INSERT INTO `cart`(cust_id,product_id,spWeight,spPrice,spImg) VALUES('$cid','$pwid','$spWeight','$spPrice','$spImg')";
+$cartQuery = "INSERT INTO `cart`(cust_id,product_id,qty,spWeight,spPrice,originalPrice,spImg) VALUES('$cid','$pwid','$qty','$spWeight','$spPrice','$spPrice','$spImg')";
 
 $cartRes = mysqli_query($con, $cartQuery);
 
