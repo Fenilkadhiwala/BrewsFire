@@ -7,8 +7,8 @@ if (isset($_SESSION['id'])) {
     // $btn = "sign out";
     $flag = 1;
     $uid = $_SESSION['id'];
-    $fname = $_SESSION['fname'];
-    $lname = $_SESSION['lname'];
+    // $fname = $_SESSION['fname'];
+    // $lname = $_SESSION['lname'];
 } else {
     // $btn = "sign in";
     $flag = 0;
@@ -233,7 +233,7 @@ if (isset($_SESSION['id'])) {
             </a>
 
             <?php
-            $cQuery = "SELECT COUNT(*) as count FROM `cart`";
+            $cQuery = "SELECT COUNT(*) as count FROM `cart` WHERE cust_id=$uid";
             $cRes = mysqli_query($con, $cQuery);
             if ($cRes->num_rows > 0) {
                 // Fetch the result as an associative array
@@ -316,19 +316,19 @@ if (isset($_SESSION['id'])) {
         </div>
     </nav>
 
-    <div class="container-fluid mainContainer d-flex justify-content-between align-items-center">
+    <div class="container-fluid mainContainer">
         <!-- <img src="" class="img-fluid" alt=""> -->
-        <ul class="list-group">
-            <li class="list-group-item list-group-item-action">
-                <i class="fa fa-user"><span>&nbsp;</span></i>
-                <?php echo $fname . ' ' . $lname; ?>
-            </li>
+        <div class="row">
+            <div class="col-1">
 
-        </ul>
+            </div>
+            <div class="col-11 mt-2">
+                <a href="deleteFullCart.php" class="btn btn-primary" id="clear">
+                    CLEAR CART
+                </a>
+            </div>
+        </div>
 
-        <a href="deleteFullCart.php" class="btn btn-primary" id="clear">
-            CLEAR CART
-        </a>
     </div>
 
 
@@ -339,7 +339,7 @@ if (isset($_SESSION['id'])) {
         <div class="row">
             <div class="col-md-10 col-11 mx-auto">
 
-                <div class="row mt-2 gx-3">
+                <div class="row mt-1 gx-3">
 
                     <div class="col-md-12 col-lg-8 col-11 mx-auto main_cart mb-lg-0 mb-5">
 

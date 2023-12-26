@@ -8,7 +8,7 @@ if (isset($_SESSION['id'])) {
     // $btn = "sign out";
     $flag = 1;
     $uid = $_SESSION['id'];
-    $fname = $_SESSION['fname'];
+    // $fname = $_SESSION['fname'];
 } else {
     // $btn = "sign in";
     $flag = 0;
@@ -194,21 +194,24 @@ if (isset($_SESSION['id'])) {
             </a>
 
             <?php
-            $cQuery = "SELECT COUNT(*) as count FROM `cart`";
-            $cRes = mysqli_query($con, $cQuery);
-            if ($cRes->num_rows > 0) {
-                // Fetch the result as an associative array
-                $row = $cRes->fetch_assoc();
 
-                // Get the count value
-                $rowCount = $row['count'];
-
-                // echo "Number of rows in the table: " . $rowCount;
-            } else {
-                // echo "No rows found";
-                $rowCount = 0;
-            }
             if ($flag == 1) {
+
+                $cQuery = "SELECT COUNT(*) as count FROM `cart` WHERE cust_id=$uid";
+
+                $cRes = mysqli_query($con, $cQuery);
+                if ($cRes->num_rows > 0) {
+                    // Fetch the result as an associative array
+                    $row = $cRes->fetch_assoc();
+
+                    // Get the count value
+                    $rowCount = $row['count'];
+
+                    // echo "Number of rows in the table: " . $rowCount;
+                } else {
+                    // echo "No rows found";
+                    $rowCount = 0;
+                }
 
                 echo '
             <div class="order-lg-2 nav-btns">
@@ -340,13 +343,13 @@ if (isset($_SESSION['id'])) {
                             <div class="col-md-6 col-lg-4 col-xl-3 p-2 best">
                             <div class="collection-img position-relative effectImg">';
                             ?>
-                            <a
-                                href="product.php?pwid=<?= $id ?>&spPrice=<?= $priceArr[$i] ?>&spWeight=<?= $weightArr[$i] ?>&spQuant=<?= $quantArr[$i] ?>&spImg=<?= $imgArr[$i] ?>">
-                                <img src="../Brews_Fire_Admin/uploads/<?= $imgArr[$i] ?>" class="w-100">
-                            </a>
+                                    <a
+                                        href="product.php?pwid=<?= $id ?>&spPrice=<?= $priceArr[$i] ?>&spWeight=<?= $weightArr[$i] ?>&spQuant=<?= $quantArr[$i] ?>&spImg=<?= $imgArr[$i] ?>">
+                                        <img src="../Brews_Fire_Admin/uploads/<?= $imgArr[$i] ?>" class="w-100">
+                                    </a>
 
-                            <?php
-                            echo '
+                                    <?php
+                                    echo '
                                 <span
                                     class="position-absolute bg-primary text-white d-flex align-items-center justify-content-center">sale</span>
                             </div>

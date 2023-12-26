@@ -19,8 +19,10 @@ if (isset($_POST['login'])) {
     if ($rows) {
         session_start();
         $_SESSION['id'] = $rows['id'];
-        $_SESSION['fname'] = $rows['fname'];
-        $_SESSION['lname'] = $rows['lname'];
+        // $_SESSION['fname'] = $rows['fname'];
+        // $_SESSION['lname'] = $rows['lname'];
+        // $_SESSION['email'] = $rows['email'];
+        // $_SESSION['contact'] = $rows['contact'];
         header("location:index.php");
     } else {
 

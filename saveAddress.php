@@ -19,9 +19,9 @@ if (isset($_POST['submit'])) {
     $addRes = mysqli_query($con, $addQuery);
 
     if ($addQuery) {
-        session_start();
-        $status = "addressSaved";
-        $_SESSION['status'] = $status;
+        // session_start();
+        // $status = "addressSaved";
+        // $_SESSION['status'] = $status;
         header("location:checkout.php");
     } else {
         $er = "Something Went Wrong!";

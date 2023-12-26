@@ -7,8 +7,8 @@ if (isset($_SESSION['id'])) {
     // $btn = "sign out";
     $flag = 1;
     $uid = $_SESSION['id'];
-    $fname = $_SESSION['fname'];
-    $lname = $_SESSION['lname'];
+    // $fname = $_SESSION['fname'];
+    // $lname = $_SESSION['lname'];
 } else {
     // $btn = "sign in";
     $flag = 0;
@@ -49,12 +49,34 @@ $contact = $fillRow['contact'];
         margin-top: 116px;
     }
 
+
+    #cart {
+        color: black;
+    }
+
     #checkout {
         border-radius: 0px;
         padding: 4px 9px;
         background: #0d6efd;
         color: white;
         border: transparent;
+    }
+
+    #place {
+        border-radius: 0px;
+        padding: 4px 9px;
+        width: 100%;
+        background: #0d6efd;
+        color: white;
+        border: transparent;
+    }
+
+    .paymentLogo {
+        height: 20px;
+    }
+
+    .paytmLog {
+        height: 60px;
     }
     </style>
 </head>
@@ -69,7 +91,7 @@ $contact = $fillRow['contact'];
             </a>
 
             <?php
-            $cQuery = "SELECT COUNT(*) as count FROM `cart`";
+            $cQuery = "SELECT COUNT(*) as count FROM `cart` WHERE cust_id=$uid";
             $cRes = mysqli_query($con, $cQuery);
             if ($cRes->num_rows > 0) {
                 // Fetch the result as an associative array
@@ -152,17 +174,24 @@ $contact = $fillRow['contact'];
         </div>
     </nav>
 
+
     <div class="container-fluid mainContainer">
         <div class="row">
             <div class="col-md-10 col-11 mx-auto">
                 <div class="row">
-                    <div class="col-md-12 col-lg-8 col-11 mt-2 shadow mx-auto">
-                        <h5 class="mb-3">Shipping Information</h5>
+                    <div class="col-md-12 col-lg-8 col-11 shadow mx-auto">
+                        <h5 class="mb-3 mt-1">Shipping Information</h5>
+
                         <?php
 
                         // session_start();
                         
-                        if (isset($_SESSION['status'])) {
+                        $checkQ = "SELECT * FROM `address` WHERE cust_id=$uid";
+                        $checkRes = mysqli_query($con, $checkQ);
+
+
+
+                        if (mysqli_num_rows($checkRes) > 0) {
 
                             $addQuery = "SELECT * FROM `address` WHERE cust_id=$uid";
 
@@ -177,21 +206,43 @@ $contact = $fillRow['contact'];
                             $state = $addRows['state'];
 
 
-
-
-                            echo '<div>
-                            
+                            echo '<div class="row">
+                            <div class="col-1">
+                            <i class="fa fa-user" style="color:blue;"></i>
+                            </div>
+                            <div class="col-11">
                             ' . $first . " " . $last . '
-                            <br>
-                            
-                            ' . $fullAddress . ", " . $city . ", " . strtoupper($state) . '
-                            <br>
-                            ' . $pc . '
-                            <br>
+                            </div>
+                        </div>
+                        <div class="row mt-2">
+                            <div class="col-1">
+                            <i class="fa-solid fa-location-dot" style="color:red;"></i>
+                            </div>
+                            <div class="col-11">
+                            ' . $fullAddress . ", " . $city . ", " . strtoupper($state) . ", " . $pc . '
+                            </div>
+                        </div>
+
+                        <div class="row mt-2">
+                            <div class="col-1">
+                            <i class="fa-solid fa-phone"></i>
+                            </div>
+                            <div class="col-11">
                             +91 ' . $contact . '
                             </div>
-                            <a id="checkout" class="btn btn-primary mt-3 mb-2" href="changeAddress.php">Change Address</a>
-                            ';
+                        </div>
+
+                        <div class="row mt-3 mb-3">
+                            <div class="col-8 col-md-4 col-lg-4">
+                            <a href="changeAddress.php?cust_id=' . $uid . '" class="btn btn-primary" id="checkout">Change Address</a>
+                            </div>
+                        
+                        </div>
+                        ';
+
+
+
+
 
 
                         } else {
@@ -280,15 +331,173 @@ $contact = $fillRow['contact'];
                         ?>
 
                     </div>
-                    <div class="col-md-12 col-lg-4 mt-2 col-11 shadow mx-auto">
-                        <h5>Items</h5>
+
+
+                    <div class="col-md-12 col-lg-4 col-11 mx-auto mt-lg-0 mt-md-3    mt-sm-3 mt-4 shadow">
+                        <div class="row">
+                            <div class="col-1">
+
+                            </div>
+                            <div class="col-11 mt-1">
+                                <h5>Order Summary</h5>
+                            </div>
+                        </div>
+
+                        <?php
+                        $sumQuery = "SELECT * FROM `cart` WHERE cust_id=$uid";
+                        $sumRes = mysqli_query($con, $sumQuery);
+                        $grand = 0;
+                        $shipCharge = 40;
+
+                        while ($sumRows = mysqli_fetch_assoc($sumRes)) {
+
+                            $product_id = $sumRows['product_id'];
+                            $qty = $sumRows['qty'];
+                            $spPrice = $sumRows['spPrice'];
+                            $spWeight = $sumRows['spWeight'];
+                            $grand += $spPrice;
+
+                            $prQuery = "SELECT name FROM `products` WHERE id=$product_id";
+                            $prRes = mysqli_query($conAdmin, $prQuery);
+                            $prRow = mysqli_fetch_assoc($prRes);
+                            $prName = $prRow['name'];
+
+                            echo '
+                            <div class="row mt-2">
+                            <div class="col-1">
+
+                            </div>
+
+                            <div class="col-11">
+                            <div class="row">
+                                <div class="col-9">
+                                ' . $prName . '
+                                </div>
+                                <div class="col-3">
+                                ₹' . $spPrice . '
+                                </div>
+                            </div>
+                            
+                            <p style="font-size:0.8rem;">Qty. ' . $qty . '&nbsp;&nbsp;&nbsp;&nbsp; Wg. ' . $spWeight . '</p>
+                            </div>
+                        </div>
+                        ';
+
+                        }
+
+                        $grand += $shipCharge;
+
+
+                        ?>
+
+                        <div class="row">
+                            <div class="col-1">
+
+                            </div>
+                            <div class="col-11 mt-1">
+                                <div class="row">
+                                    <div class="col-9">
+                                        Shipping Charge:
+                                    </div>
+                                    <div class="col-3">
+                                        ₹<?php echo $shipCharge; ?>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-1">
+
+                            </div>
+                            <div class="col-11 mt-1">
+                                <hr class="hr" />
+                            </div>
+                        </div>
+
+                        <div class="row mb-2">
+                            <div class="col-1">
+
+                            </div>
+                            <div class="col-11 mt-1">
+                                <div class="row">
+                                    <div class="col-9 fs-5 text-danger">
+                                        Grand Total:
+                                    </div>
+                                    <div class="col-3">
+                                        ₹<?php
+                                        $_SESSION['grandAmount'] = $grand;
+                                        echo $grand;
+                                        ?>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="row">
+                            <div class="col-1">
+
+                            </div>
+                            <div class="col-11 mb-3 mt-lg-0 mt-2">
+                                <div class="row">
+                                    <div class="col-12 mt-2 fw-bold">
+                                        Choose Payment Method
+                                    </div>
+
+                                </div>
+                                <div class="row">
+                                    <div class="col-12 mt-2">
+                                        <input type="radio" onchange="updateCODText()" class="form-check-input" id="radio1" name="optradio"
+                                            value="option1" checked>
+                                        <label class="form-check-label px-2" for="radio1">Cash On Delivery</label>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-12 mt-2">
+                                        <input type="radio" onchange="updateText()" class="form-check-input" id="radio1"
+                                            name="optradio" value="option1">
+                                        <label class="form-check-label px-2" for="radio1">Pay With Card, UPI</label>
+
+                                    </div>
+                                </div>
+
+
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-12 mt-2">
+                                <a href="pay.php" class="btn btn-primary mb-3" id="place">
+                                    Place Order
+                                </a>
+                            </div>
+
+                        </div>
+
+
                     </div>
                 </div>
+
+
             </div>
         </div>
     </div>
 
 </body>
+
+<script>
+var placeBtn = document.getElementById('place')
+
+const updateCODText=()=>{
+    placeBtn.innerText = "Place Order";
+}
+
+
+const updateText = () => {
+    placeBtn.innerText = "Proceed With Payment";
+}
+</script>
 
 
 </html>
