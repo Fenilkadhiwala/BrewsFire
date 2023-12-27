@@ -248,15 +248,13 @@ if (isset($_SESSION['id'])) {
                     <li class="nav-item px-2 py-2">
                         <a class="nav-link text-uppercase text-dark" href="#about">about us</a>
                     </li>
-                    <li class="nav-item px-2 py-2 border-0">
-                        <a class="nav-link text-uppercase text-dark" href="#popular">popular</a>
-                    </li>
+                    
                     <?php
                     if ($flag == 1) {
                         echo '
                         <li class="nav-item px-2 py-2 border-0">
-                        <a class="nav-link text-uppercase text-dark" href="logout.php">
-                           sign out
+                        <a class="nav-link text-uppercase text-dark" href="orders.php">
+                           my orders
                         </a>
                     </li>
                     <li class="nav-item px-2 py-2 border-0">
@@ -264,6 +262,13 @@ if (isset($_SESSION['id'])) {
                        account
                     </a>
                 </li>
+               
+                        <li class="nav-item px-2 py-2 border-0">
+                        <a class="nav-link text-uppercase text-dark" href="logout.php">
+                           sign out
+                        </a>
+                    </li>
+                    
                         ';
                     } else {
                         echo '
@@ -343,12 +348,12 @@ if (isset($_SESSION['id'])) {
                             <div class="col-md-6 col-lg-4 col-xl-3 p-2 best">
                             <div class="collection-img position-relative effectImg">';
                             ?>
-                                    <a
-                                        href="product.php?pwid=<?= $id ?>&spPrice=<?= $priceArr[$i] ?>&spWeight=<?= $weightArr[$i] ?>&spQuant=<?= $quantArr[$i] ?>&spImg=<?= $imgArr[$i] ?>">
-                                        <img src="../Brews_Fire_Admin/uploads/<?= $imgArr[$i] ?>" class="w-100">
-                                    </a>
+                    <a
+                        href="product.php?pwid=<?= $id ?>&spPrice=<?= $priceArr[$i] ?>&spWeight=<?= $weightArr[$i] ?>&spQuant=<?= $quantArr[$i] ?>&spImg=<?= $imgArr[$i] ?>">
+                        <img src="../Brews_Fire_Admin/uploads/<?= $imgArr[$i] ?>" class="w-100">
+                    </a>
 
-                                    <?php
+                    <?php
                                     echo '
                                 <span
                                     class="position-absolute bg-primary text-white d-flex align-items-center justify-content-center">sale</span>
@@ -578,91 +583,6 @@ if (isset($_SESSION['id'])) {
     <!-- end of about us -->
 
     <!-- popular -->
-    <section id="popular" class="py-5">
-        <div class="container">
-            <div class="title text-center pt-3 pb-5">
-                <h2 class="position-relative d-inline-block ms-4">Popular Of This Year</h2>
-            </div>
-
-            <div class="row">
-                <div class="col-md-6 col-lg-4 row g-3">
-                    <h3 class="fs-5">Top Rated</h3>
-                    <div class="d-flex align-items-start justify-content-start">
-                        <img src="images/product.jpg" alt="" class="img-fluid pe-3 w-25">
-                        <div>
-                            <p class="mb-0">Blue Shirt</p>
-                            <span>$ 20.00</span>
-                        </div>
-                    </div>
-                    <div class="d-flex align-items-start justify-content-start">
-                        <img src="images/product.jpg" alt="" class="img-fluid pe-3 w-25">
-                        <div>
-                            <p class="mb-0">500 gm pkg.</p>
-                            <span>$ 20.00</span>
-                        </div>
-                    </div>
-                    <div class="d-flex align-items-start justify-content-start">
-                        <img src="images/product.jpg" alt="" class="img-fluid pe-3 w-25">
-                        <div>
-                            <p class="mb-0">500 gm pkg.</p>
-                            <span>$ 20.00</span>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-md-6 col-lg-4 row g-3">
-                    <h3 class="fs-5">Best Selling</h3>
-                    <div class="d-flex align-items-start justify-content-start">
-                        <img src="images/product.jpg" alt="" class="img-fluid pe-3 w-25">
-                        <div>
-                            <p class="mb-0">500 gm pkg.</p>
-                            <span>$ 20.00</span>
-                        </div>
-                    </div>
-                    <div class="d-flex align-items-start justify-content-start">
-                        <img src="images/product.jpg" alt="" class="img-fluid pe-3 w-25">
-                        <div>
-                            <p class="mb-0">500 gm pkg.</p>
-                            <span>$ 20.00</span>
-                        </div>
-                    </div>
-                    <div class="d-flex align-items-start justify-content-start">
-                        <img src="images/product.jpg" alt="" class="img-fluid pe-3 w-25">
-                        <div>
-                            <p class="mb-0">500 gm pkg.</p>
-                            <span>$ 20.00</span>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-md-6 col-lg-4 row g-3">
-                    <h3 class="fs-5">On Sale</h3>
-                    <div class="d-flex align-items-start justify-content-start">
-                        <img src="images/product.jpg" alt="" class="img-fluid pe-3 w-25">
-                        <div>
-                            <p class="mb-0">500 gm pkg.</p>
-                            <span>$ 20.00</span>
-                        </div>
-                    </div>
-                    <div class="d-flex align-items-start justify-content-start">
-                        <img src="images/product.jpg" alt="" class="img-fluid pe-3 w-25">
-                        <div>
-                            <p class="mb-0">500 gm pkg.</p>
-                            <span>$ 20.00</span>
-                        </div>
-                    </div>
-                    <div class="d-flex align-items-start justify-content-start">
-                        <img src="images/product.jpg" alt="" class="img-fluid pe-3 w-25">
-                        <div>
-                            <p class="mb-0">500 gm pkg.</p>
-                            <span>$ 20.00</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-    <!-- end of popular -->
 
     <!-- newsletter -->
     <section id="newsletter" class="py-5">

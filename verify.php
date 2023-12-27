@@ -251,8 +251,8 @@ if ($success === true) {
                     if ($flag == 1) {
                         echo '
                         <li class="nav-item px-2 py-2 border-0">
-                        <a class="nav-link text-uppercase text-dark" href="logout.php">
-                           sign out
+                        <a class="nav-link text-uppercase text-dark" href="orders.php">
+                           my orders
                         </a>
                     </li>
                     <li class="nav-item px-2 py-2 border-0">
@@ -260,6 +260,13 @@ if ($success === true) {
                        account
                     </a>
                 </li>
+               
+                        <li class="nav-item px-2 py-2 border-0">
+                        <a class="nav-link text-uppercase text-dark" href="logout.php">
+                           sign out
+                        </a>
+                    </li>
+                    
                         ';
                     } else {
                         echo '
@@ -297,6 +304,31 @@ if ($success === true) {
                                 $am = $pRow['amount'];
 
                                 if ($st == 1) {
+
+                                    $histQ = "SELECT * FROM `cart` WHERE cust_id=$uid";
+
+                                    $histRes = mysqli_query($con, $histQ);
+
+                                    while ($histR = mysqli_fetch_assoc($histRes)) {
+                                        $cust_id = $histR['cust_id'];
+                                        $p_id = $histR['product_id'];
+                                        $sp_w = $histR['spWeight'];
+                                        $sp_qty = $histR['qty'];
+                                        $sp_img = $histR['spImg'];
+
+                                        $histQuery = "INSERT INTO `history`(cust_id,product_id,spWeight,qty,spImg) VALUES('$cust_id','$p_id','$sp_w','$sp_qty','$sp_img')";
+
+                                        mysqli_query($con, $histQuery);
+                                    }
+
+                                    $delQuery = "DELETE FROM `cart` WHERE cust_id=$uid";
+                                    $delRes = mysqli_query($con, $delQuery);
+
+                                    $currentDate = date('l, F j');
+                                    $expectedDate = date('Y-m-d', strtotime($currentDate . ' + 8 days'));
+
+                                    $orderQuery = "INSERT INTO `orders`(cust_id,order_date,expected_date) VALUES('$uid','$currentDate','$expectedDate')";
+                                    mysqli_query($con, $orderQuery);
                                     echo '
                                 <i class="fa-solid fa-badge-check successIcon"></i>
                              <h3 class="mt-4" style="color:green">Success</h3>';
@@ -320,7 +352,7 @@ if ($success === true) {
                                     echo '₹' . " " . $am;
                                     ?>
                                 </p>
-                                <a href="index.php" id="back" class="btn btn-danger mb-4">Done</a>
+                                <a href="orders.php" id="back" class="btn btn-danger mb-4">Done</a>
                             </div>
 
                         </div>
@@ -337,7 +369,7 @@ if ($success === true) {
 
         </div>
     </div>
-    </div>
+    
 
 </body>
 

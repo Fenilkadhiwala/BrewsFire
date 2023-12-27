@@ -7,8 +7,8 @@ if (isset($_SESSION['id'])) {
     // $btn = "sign out";
     $flag = 1;
     $uid = $_SESSION['id'];
-    $fname = $_SESSION['fname'];
-    $lname = $_SESSION['lname'];
+    // $fname = $_SESSION['fname'];
+    // $lname = $_SESSION['lname'];
 } else {
     // $btn = "sign in";
     $flag = 0;
@@ -138,8 +138,8 @@ $img = $row['images'];
                     if ($flag == 1) {
                         echo '
                         <li class="nav-item px-2 py-2 border-0">
-                        <a class="nav-link text-uppercase text-dark" href="logout.php">
-                           sign out
+                        <a class="nav-link text-uppercase text-dark" href="orders.php">
+                           my orders
                         </a>
                     </li>
                     <li class="nav-item px-2 py-2 border-0">
@@ -147,6 +147,13 @@ $img = $row['images'];
                        account
                     </a>
                 </li>
+               
+                        <li class="nav-item px-2 py-2 border-0">
+                        <a class="nav-link text-uppercase text-dark" href="logout.php">
+                           sign out
+                        </a>
+                    </li>
+                    
                         ';
                     } else {
                         echo '

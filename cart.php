@@ -233,21 +233,24 @@ if (isset($_SESSION['id'])) {
             </a>
 
             <?php
-            $cQuery = "SELECT COUNT(*) as count FROM `cart` WHERE cust_id=$uid";
-            $cRes = mysqli_query($con, $cQuery);
-            if ($cRes->num_rows > 0) {
-                // Fetch the result as an associative array
-                $row = $cRes->fetch_assoc();
 
-                // Get the count value
-                $rowCount = $row['count'];
-
-                // echo "Number of rows in the table: " . $rowCount;
-            } else {
-                // echo "No rows found";
-                $rowCount = 0;
-            }
             if ($flag == 1) {
+
+                $cQuery = "SELECT COUNT(*) as count FROM `cart` WHERE cust_id=$uid";
+
+                $cRes = mysqli_query($con, $cQuery);
+                if ($cRes->num_rows > 0) {
+                    // Fetch the result as an associative array
+                    $row = $cRes->fetch_assoc();
+
+                    // Get the count value
+                    $rowCount = $row['count'];
+
+                    // echo "Number of rows in the table: " . $rowCount;
+                } else {
+                    // echo "No rows found";
+                    $rowCount = 0;
+                }
 
                 echo '
             <div class="order-lg-2 nav-btns">
@@ -284,15 +287,13 @@ if (isset($_SESSION['id'])) {
                     <li class="nav-item px-2 py-2">
                         <a class="nav-link text-uppercase text-dark" href="index.php">about us</a>
                     </li>
-                    <li class="nav-item px-2 py-2 border-0">
-                        <a class="nav-link text-uppercase text-dark" href="index.php">popular</a>
-                    </li>
+                    
                     <?php
                     if ($flag == 1) {
                         echo '
                         <li class="nav-item px-2 py-2 border-0">
-                        <a class="nav-link text-uppercase text-dark" href="logout.php">
-                           sign out
+                        <a class="nav-link text-uppercase text-dark" href="orders.php">
+                           my orders
                         </a>
                     </li>
                     <li class="nav-item px-2 py-2 border-0">
@@ -300,6 +301,13 @@ if (isset($_SESSION['id'])) {
                        account
                     </a>
                 </li>
+               
+                        <li class="nav-item px-2 py-2 border-0">
+                        <a class="nav-link text-uppercase text-dark" href="logout.php">
+                           sign out
+                        </a>
+                    </li>
+                    
                         ';
                     } else {
                         echo '
@@ -315,6 +323,7 @@ if (isset($_SESSION['id'])) {
             </div>
         </div>
     </nav>
+
 
     <div class="container-fluid mainContainer">
         <!-- <img src="" class="img-fluid" alt=""> -->
@@ -348,29 +357,34 @@ if (isset($_SESSION['id'])) {
                         $cartQuery = "SELECT * FROM `cart` WHERE cust_id=$uid";
 
                         $cartRes = mysqli_query($con, $cartQuery);
-                        $itemSum = 0;
-                        $shippingCost = 40;
-                        $defaultQuant = 1;
 
-                        while ($rows = mysqli_fetch_assoc($cartRes)) {
+                        $rowCount = mysqli_num_rows($cartRes);
+
+                        if ($rowCount > 0) {
+
+                            $itemSum = 0;
+                            $shippingCost = 40;
+                            $defaultQuant = 1;
+
+                            while ($rows = mysqli_fetch_assoc($cartRes)) {
 
 
-                            $id = $rows['id'];
-                            $cid = $rows['cust_id'];
-                            $pid = $rows['product_id'];
-                            $qty = $rows['qty'];
-                            $wg = $rows['spWeight'];
-                            $price = $rows['spPrice'];
-                            $originalPrice = $rows['originalPrice'];
-                            $cartImg = $rows['spImg'];
+                                $id = $rows['id'];
+                                $cid = $rows['cust_id'];
+                                $pid = $rows['product_id'];
+                                $qty = $rows['qty'];
+                                $wg = $rows['spWeight'];
+                                $price = $rows['spPrice'];
+                                $originalPrice = $rows['originalPrice'];
+                                $cartImg = $rows['spImg'];
 
-                            $pQuery = "SELECT * FROM `products` WHERE id=$pid";
+                                $pQuery = "SELECT * FROM `products` WHERE id=$pid";
 
-                            $pRes = mysqli_query($conAdmin, $pQuery);
-                            $pRow = mysqli_fetch_assoc($pRes);
+                                $pRes = mysqli_query($conAdmin, $pQuery);
+                                $pRow = mysqli_fetch_assoc($pRes);
 
-                            $name = $pRow['name'];
-                            // $originalPrice=$pRow['price'];
+                                $name = $pRow['name'];
+                                // $originalPrice=$pRow['price'];
                         
 
 
@@ -379,9 +393,9 @@ if (isset($_SESSION['id'])) {
 
 
 
-                            $itemSum += $price;
+                                $itemSum += $price;
 
-                            echo '
+                                echo '
                         <div class="card p-4 shadow">
 
                             <div class="row">
@@ -431,8 +445,19 @@ if (isset($_SESSION['id'])) {
 
 
                         </div>';
-                        }
+                            }
 
+
+
+                        } else {
+                            echo '
+                            <div class="shadow d-flex align-items-center justify-content-center flex-column pt-4 mt-3">
+                            <h4>Your cart is empty</h4>
+                            <a href="index.php" id="checkout" class="btn btn-danger mb-4">Start Shopping</a>
+                            </div>
+
+                            ';
+                        }
                         ?>
 
 
@@ -444,23 +469,32 @@ if (isset($_SESSION['id'])) {
                             <h5 class="product_name">Total Amount</h5>
                             <hr class="mb-3">
 
-                            <div class="price d-flex justify-content-between">
+                            <?php
+
+                            if ($rowCount > 0) {
+
+                                echo '<div class="price d-flex justify-content-between">
                                 <p>Products Amount</p>
-                                <p id="totalAmt">₹<span><?php echo $itemSum; ?></span></p>
+                                <p id="totalAmt">₹<span>' . $itemSum . '</span></p>
                             </div>
                             <div class="price d-flex justify-content-between">
                                 <p>Shipping Amount</p>
-                                <p>₹<span><?php echo $shippingCost; ?></span></p>
+                                <p>₹<span>' . $shippingCost . '</span></p>
                             </div>
 
                             <hr class="mb-3">
                             <div class="price d-flex justify-content-between font-weight-bold">
                                 <p>Total Amount(Inc. all taxes)</p>
-                                <p>₹<span><?php echo $itemSum + $shippingCost; ?></span></p>
+                                <p>₹<span>' . $itemSum + $shippingCost . '</span></p>
                             </div>
                             <a id="checkout" href="checkout.php" class="btn btn-primary text-uppercase">
                                 Checkout
                             </a>
+';
+                            }
+
+                            ?>
+
 
                         </div>
 

@@ -142,15 +142,13 @@ $contact = $fillRow['contact'];
                     <li class="nav-item px-2 py-2">
                         <a class="nav-link text-uppercase text-dark" href="index.php">about us</a>
                     </li>
-                    <li class="nav-item px-2 py-2 border-0">
-                        <a class="nav-link text-uppercase text-dark" href="index.php">popular</a>
-                    </li>
+                   
                     <?php
                     if ($flag == 1) {
                         echo '
                         <li class="nav-item px-2 py-2 border-0">
-                        <a class="nav-link text-uppercase text-dark" href="logout.php">
-                           sign out
+                        <a class="nav-link text-uppercase text-dark" href="orders.php">
+                           my orders
                         </a>
                     </li>
                     <li class="nav-item px-2 py-2 border-0">
@@ -158,6 +156,13 @@ $contact = $fillRow['contact'];
                        account
                     </a>
                 </li>
+               
+                        <li class="nav-item px-2 py-2 border-0">
+                        <a class="nav-link text-uppercase text-dark" href="logout.php">
+                           sign out
+                        </a>
+                    </li>
+                    
                         ';
                     } else {
                         echo '
