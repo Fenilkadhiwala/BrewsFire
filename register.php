@@ -16,6 +16,7 @@ if (isset($_POST['register'])) {
     $result = mysqli_query($con, $query);
 
     if ($result) {
+        session_name("customer");
         session_start();
         $_SESSION['status'] = "success";
         header("location:login.php");

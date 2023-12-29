@@ -5,6 +5,7 @@ require('config.php');
 require('razorpay-php-2.9.0/Razorpay.php');
 include("config.php");
 
+session_name("customer");
 session_start();
 
 if (isset($_SESSION['id'])) {

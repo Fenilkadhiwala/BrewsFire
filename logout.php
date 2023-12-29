@@ -1,10 +1,11 @@
 <?php
+
+session_name("customer");
 session_start();
 
 
-session_destroy();
-
+// session_destroy();
+unset($_SESSION['id']);
 header("location:index.php");
-
 exit();
 ?>

@@ -1,4 +1,6 @@
 <?php
+
+session_name("customer");
 session_start();
 
 if (isset($_SESSION['status'])) {

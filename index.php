@@ -2,10 +2,9 @@
 include "./connection/connectAdmin.php";
 include "./connection/connect.php";
 
+session_name("customer");
 session_start();
 if (isset($_SESSION['id'])) {
-
-    // $btn = "sign out";
     $flag = 1;
     $uid = $_SESSION['id'];
     // $fname = $_SESSION['fname'];
@@ -118,6 +117,7 @@ if (isset($_SESSION['id'])) {
         color: white !important;
         border: transparent !important;
         font-size: 15px;
+        /* width:200px!important; */
     }
 
     .cartBtn:hover {
@@ -176,9 +176,6 @@ if (isset($_SESSION['id'])) {
         #collection {
             margin-top: 20px;
         }
-
-
-
     }
     </style>
 </head>
@@ -295,6 +292,7 @@ if (isset($_SESSION['id'])) {
         </div>
     </div>
 
+    
 
     <!-- end of navbar -->
 
@@ -348,12 +346,12 @@ if (isset($_SESSION['id'])) {
                             <div class="col-md-6 col-lg-4 col-xl-3 p-2 best">
                             <div class="collection-img position-relative effectImg">';
                             ?>
-                    <a
-                        href="product.php?pwid=<?= $id ?>&spPrice=<?= $priceArr[$i] ?>&spWeight=<?= $weightArr[$i] ?>&spQuant=<?= $quantArr[$i] ?>&spImg=<?= $imgArr[$i] ?>">
-                        <img src="../Brews_Fire_Admin/uploads/<?= $imgArr[$i] ?>" class="w-100">
-                    </a>
+                                    <a
+                                        href="product.php?pwid=<?= $id ?>&spPrice=<?= $priceArr[$i] ?>&spWeight=<?= $weightArr[$i] ?>&spQuant=<?= $quantArr[$i] ?>&spImg=<?= $imgArr[$i] ?>">
+                                        <img src="../Brews_Fire_Admin/uploads/<?= $imgArr[$i] ?>" class="w-100">
+                                    </a>
 
-                    <?php
+                                    <?php
                                     echo '
                                 <span
                                     class="position-absolute bg-primary text-white d-flex align-items-center justify-content-center">sale</span>

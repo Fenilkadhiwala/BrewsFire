@@ -1,6 +1,8 @@
 <?php
 include "./connection/connect.php";
 include "./connection/connectAdmin.php";
+
+session_name("customer");
 session_start();
 if (isset($_SESSION['id'])) {
 
@@ -385,14 +387,6 @@ if (isset($_SESSION['id'])) {
 
                                 $name = $pRow['name'];
                                 // $originalPrice=$pRow['price'];
-                        
-
-
-
-
-
-
-
                                 $itemSum += $price;
 
                                 echo '

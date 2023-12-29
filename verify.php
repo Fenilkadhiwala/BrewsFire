@@ -1,9 +1,11 @@
 <?php
 include "./connection/connect.php";
+include "./connection/connectAdmin.php";
 require('config.php');
 require('razorpay-php-2.9.0/Razorpay.php');
 include("config.php");
 
+session_name("customer");
 session_start();
 
 if (isset($_SESSION['id'])) {
@@ -316,7 +318,27 @@ if ($success === true) {
                                         $sp_qty = $histR['qty'];
                                         $sp_img = $histR['spImg'];
 
-                                        $histQuery = "INSERT INTO `history`(cust_id,product_id,spWeight,qty,spImg) VALUES('$cust_id','$p_id','$sp_w','$sp_qty','$sp_img')";
+
+                                        $nameQ = "SELECT name FROM `products` WHERE id=$p_id;";
+                                        $nameRes = mysqli_query($conAdmin, $nameQ);
+
+                                        $prodRow = mysqli_fetch_assoc($nameRes);
+
+                                        $prodName = $prodRow['name'];
+
+                                        $currentDate = date('l, F j');
+                                        $expectedDate = date('Y-m-d', strtotime($currentDate . ' + 8 days'));
+
+                                        $orderQuery = "INSERT INTO `orders`(cust_id,order_date,expected_date) VALUES('$uid','$currentDate','$expectedDate')";
+                                        mysqli_query($con, $orderQuery);
+
+                                        $retOId = "SELECT * FROM `orders` WHERE cust_id='$cust_id' ORDER BY id DESC LIMIT 1";
+                                        $retRes = mysqli_query($con, $retOId);
+                                        $or = mysqli_fetch_assoc($retRes);
+                                        $oid = $or['id'];
+
+
+                                        $histQuery = "INSERT INTO `history`(cust_id,oid,product_id,spName,spWeight,qty,spImg) VALUES('$cust_id','$oid','$p_id','$prodName','$sp_w','$sp_qty','$sp_img')";
 
                                         mysqli_query($con, $histQuery);
                                     }
@@ -324,11 +346,7 @@ if ($success === true) {
                                     $delQuery = "DELETE FROM `cart` WHERE cust_id=$uid";
                                     $delRes = mysqli_query($con, $delQuery);
 
-                                    $currentDate = date('l, F j');
-                                    $expectedDate = date('Y-m-d', strtotime($currentDate . ' + 8 days'));
 
-                                    $orderQuery = "INSERT INTO `orders`(cust_id,order_date,expected_date) VALUES('$uid','$currentDate','$expectedDate')";
-                                    mysqli_query($con, $orderQuery);
                                     echo '
                                 <i class="fa-solid fa-badge-check successIcon"></i>
                              <h3 class="mt-4" style="color:green">Success</h3>';
@@ -369,7 +387,7 @@ if ($success === true) {
 
         </div>
     </div>
-    
+
 
 </body>
 

@@ -1,6 +1,8 @@
 <?php
 include "./connection/connect.php";
 include "./connection/connectAdmin.php";
+
+session_name("customer");
 session_start();
 if (isset($_SESSION['id'])) {
 
@@ -284,6 +286,7 @@ if (isset($_SESSION['id'])) {
 
     <div class="container-fluid mt-3">
         <?php
+        
         $historyQ = "SELECT * FROM `history` WHERE cust_id='$uid'";
 
         $historyRes = mysqli_query($con, $historyQ);
@@ -336,7 +339,7 @@ if (isset($_SESSION['id'])) {
 
                 <div class="row">
                 <div class="col-12">
-                <a href="index.php" id="checkout" class="btn btn-danger mb-4">Cancel Order</a>
+                <a href="cancelOrder.php?n='.$histName.'&w='.$histWg.'&q='.$histQty.'" id="checkout" class="btn btn-danger mb-4">Cancel Order</a>
                 </div>
 
                

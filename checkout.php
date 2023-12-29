@@ -1,14 +1,15 @@
 <?php
 include "./connection/connect.php";
 include "./connection/connectAdmin.php";
+
+session_name("customer");
 session_start();
 if (isset($_SESSION['id'])) {
 
-    // $btn = "sign out";
+    
     $flag = 1;
     $uid = $_SESSION['id'];
-    // $fname = $_SESSION['fname'];
-    // $lname = $_SESSION['lname'];
+    
 } else {
     // $btn = "sign in";
     $flag = 0;

@@ -1,6 +1,7 @@
 <?php
 include "./connection/connectAdmin.php";
 
+session_name("customer");
 session_start();
 if (isset($_SESSION['id'])) {
 
@@ -66,7 +67,7 @@ $img = $row['images'];
         margin-top: 110px;
     }
 
-    #cartBtn {
+    .cartBtn {
         border-radius: 0px !important;
         border-radius: 4px !important;
         padding: 8px 15px !important;
@@ -74,14 +75,17 @@ $img = $row['images'];
         color: white !important;
         border: transparent !important;
         font-size: 15px;
+        width:150px;
     }
 
-    #cartBtn:hover {
+    .cartBtn:hover {
         cursor: pointer !important;
         color: black !important;
         background: white !important;
         border: 1px solid black !important;
+        
     }
+    
 
     
     </style>
@@ -171,7 +175,7 @@ $img = $row['images'];
     </nav>
 
     <div class="container-fluid p-5 shadow" id="wholeProduct">
-        <div class="">
+        
             <div class="row">
                 <div class="col-md-6 col-11 shadow mx-auto productImg">
                 <img src="../Brews_Fire_Admin/uploads/<?php echo $spImg; ?>" class="w-100">
@@ -198,15 +202,15 @@ $img = $row['images'];
                                 echo '<p><b>Remaining.:</b>&nbsp; ' . $spQuant . '</p>';
                             }
                             ?>
-                            <button class="btn btn-primary text-uppercase" id="cartBtn">
-                                <i class="fas fa-plus"></i> Add to cart
-                            </button>
+                             <a href="addCart.php?pwid=<?php echo $pwid; ?>&cid=<?php echo $uid; ?>&spWeight=<?php echo $spWeight; ?>&spPrice=<?php echo $spPrice; ?>&spImg=<?php echo $spImg; ?>" class="btn btn-primary text-uppercase mt-3 cartBtn">
+                                        <i class="fa-solid fa-plus"></i>&nbsp; Add To Cart
+                            </a>
 
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
+        
     </div>
 </body>
 
