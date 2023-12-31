@@ -30,12 +30,13 @@ if (isset($_SESSION['id'])) {
     <!-- bootstrap css -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
-    <link rel="stylesheet" href="bootstrap-5.0.2-dist/css/bootstrap.min.css">
+    <!-- <link rel="stylesheet" href="bootstrap-5.0.2-dist/css/bootstrap.min.css"> -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
         integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
     <!-- custom css -->
     <link rel="stylesheet" href="css/main.css">
+    <script src="script.js"></script>
     <style>
     .collection-img {
         height: 250px;
@@ -110,6 +111,17 @@ if (isset($_SESSION['id'])) {
     }
 
     .cartBtn {
+        border-radius: 0px !important;
+        border-radius: 4px !important;
+        padding: 8px 15px !important;
+        background: #e5345b !important;
+        color: white !important;
+        border: transparent !important;
+        font-size: 15px;
+        /* width:200px!important; */
+    }
+
+    .filterBtn {
         border-radius: 0px !important;
         border-radius: 4px !important;
         padding: 8px 15px !important;
@@ -245,7 +257,7 @@ if (isset($_SESSION['id'])) {
                     <li class="nav-item px-2 py-2">
                         <a class="nav-link text-uppercase text-dark" href="#about">about us</a>
                     </li>
-                    
+
                     <?php
                     if ($flag == 1) {
                         echo '
@@ -292,7 +304,7 @@ if (isset($_SESSION['id'])) {
         </div>
     </div>
 
-    
+
 
     <!-- end of navbar -->
 
@@ -308,10 +320,29 @@ if (isset($_SESSION['id'])) {
 
             <div class="row g-0">
                 <div class="d-flex flex-wrap justify-content-center mt-5 filter-button-group">
-                    <button type="button" class="btn m-2 text-dark active-filter-btn" data-filter="*">All</button>
-                    <button type="button" class="btn m-2 text-dark" data-filter=".best">Best Sellers</button>
-                    <button type="button" class="btn m-2 text-dark" data-filter=".feat">Featured</button>
-                    <button type="button" class="btn m-2 text-dark" data-filter=".new">New Arrival</button>
+                    <button type="button" class="btn btn-primary dropdown-toggle filterBtn" data-bs-toggle="dropdown">
+                        Filter
+                    </button>
+                    <ul class="dropdown-menu">
+                        <li>
+                            <button class="dropdown-item hundreadBtn filters">100 gm</button>
+                        </li>
+                        <li>
+                            <button class="dropdown-item twoFiftyBtn filters">250 gm</button>
+                        </li>
+                        <li>
+                            <button class="dropdown-item fiveBtn filters">500 gm</button>
+                        </li>
+
+                        <li>
+                            <button class="dropdown-item kgBtn filters">1 kg</button>
+                        </li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li>
+                            <button class="dropdown-item allBtn filters">All</button>
+                        </li>
+
+                    </ul>
                 </div>
 
                 <div class="collection-list mt-4 row gx-0 gy-3">
@@ -346,12 +377,12 @@ if (isset($_SESSION['id'])) {
                             <div class="col-md-6 col-lg-4 col-xl-3 p-2 best">
                             <div class="collection-img position-relative effectImg">';
                             ?>
-                                    <a
-                                        href="product.php?pwid=<?= $id ?>&spPrice=<?= $priceArr[$i] ?>&spWeight=<?= $weightArr[$i] ?>&spQuant=<?= $quantArr[$i] ?>&spImg=<?= $imgArr[$i] ?>">
-                                        <img src="../Brews_Fire_Admin/uploads/<?= $imgArr[$i] ?>" class="w-100">
-                                    </a>
+                    <a
+                        href="product.php?pwid=<?= $id ?>&spPrice=<?= $priceArr[$i] ?>&spWeight=<?= $weightArr[$i] ?>&spQuant=<?= $quantArr[$i] ?>&spImg=<?= $imgArr[$i] ?>">
+                        <img src="../Brews_Fire_Admin/uploads/<?= $imgArr[$i] ?>" class="w-100">
+                    </a>
 
-                                    <?php
+                    <?php
                                     echo '
                                 <span
                                     class="position-absolute bg-primary text-white d-flex align-items-center justify-content-center">sale</span>
@@ -411,7 +442,7 @@ if (isset($_SESSION['id'])) {
             <div class="special-list row g-0">
                 <div class="col-md-6 col-lg-4 col-xl-3 p-2">
                     <div class="special-img position-relative overflow-hidden">
-                        <img src="images/product.jpg" class="w-100">
+                        <!-- <img src="images/product.jpg" class="w-100"> -->
                         <span
                             class="position-absolute d-flex align-items-center justify-content-center text-primary fs-4">
                             <i class="fas fa-heart"></i>
@@ -432,7 +463,7 @@ if (isset($_SESSION['id'])) {
 
                 <div class="col-md-6 col-lg-4 col-xl-3 p-2">
                     <div class="special-img position-relative overflow-hidden">
-                        <img src="images/product.jpg" class="w-100">
+                        <!-- <img src="images/product.jpg" class="w-100"> -->
                         <span
                             class="position-absolute d-flex align-items-center justify-content-center text-primary fs-4">
                             <i class="fas fa-heart"></i>
@@ -453,7 +484,7 @@ if (isset($_SESSION['id'])) {
 
                 <div class="col-md-6 col-lg-4 col-xl-3 p-2">
                     <div class="special-img position-relative overflow-hidden">
-                        <img src="images/product.jpg" class="w-100">
+                        <!-- <img src="images/product.jpg" class="w-100"> -->
                         <span
                             class="position-absolute d-flex align-items-center justify-content-center text-primary fs-4">
                             <i class="fas fa-heart"></i>
@@ -474,7 +505,7 @@ if (isset($_SESSION['id'])) {
 
                 <div class="col-md-6 col-lg-4 col-xl-3 p-2">
                     <div class="special-img position-relative overflow-hidden">
-                        <img src="images/product.jpg" class="w-100">
+                        <!-- <img src="images/product.jpg" class="w-100"> -->
                         <span
                             class="position-absolute d-flex align-items-center justify-content-center text-primary fs-4">
                             <i class="fas fa-heart"></i>
@@ -507,7 +538,7 @@ if (isset($_SESSION['id'])) {
 
             <div class="row g-3">
                 <div class="card border-0 col-md-6 col-lg-4 bg-transparent my-3">
-                    <img src="images/product.jpg" alt="">
+                    <!-- <img src="images/product.jpg" alt=""> -->
                     <div class="card-body px-0">
                         <h4 class="card-title">Lorem ipsum, dolor sit amet consectetur adipisicing</h4>
                         <p class="card-text mt-3 text-muted">Lorem ipsum dolor sit amet consectetur adipisicing elit.
@@ -523,7 +554,7 @@ if (isset($_SESSION['id'])) {
                 </div>
 
                 <div class="card border-0 col-md-6 col-lg-4 bg-transparent my-3">
-                    <img src="images/product.jpg" alt="">
+                    <!-- <img src="images/product.jpg" alt=""> -->
                     <div class="card-body px-0">
                         <h4 class="card-title">Lorem ipsum, dolor sit amet consectetur adipisicing</h4>
                         <p class="card-text mt-3 text-muted">Lorem ipsum dolor sit amet consectetur adipisicing elit.
@@ -539,7 +570,7 @@ if (isset($_SESSION['id'])) {
                 </div>
 
                 <div class="card border-0 col-md-6 col-lg-4 bg-transparent my-3">
-                    <img src="images/product.jpg" alt="">
+                    <!-- <img src="images/product.jpg" alt=""> -->
                     <div class="card-body px-0">
                         <h4 class="card-title">Lorem ipsum, dolor sit amet consectetur adipisicing</h4>
                         <p class="card-text mt-3 text-muted">Lorem ipsum dolor sit amet consectetur adipisicing elit.
@@ -573,7 +604,7 @@ if (isset($_SESSION['id'])) {
                         velit, nemo, nobis, nulla ullam pariatur totam quos.</p>
                 </div>
                 <div class="col-lg-6 order-lg-0">
-                    <img src="images/logo.png" alt="" class="img-fluid">
+                    <!-- <img src="images/logo.png" alt="" class="img-fluid"> -->
                 </div>
             </div>
         </div>
@@ -699,15 +730,16 @@ if (isset($_SESSION['id'])) {
             </div>
         </div>
     </footer>
-    <!-- end of footer -->
+
+
     <!-- jquery -->
-    <script src="js/jquery-3.6.0.js"></script>
+    <!-- <script src="js/jquery-3.6.0.js"></script> -->
     <!-- isotope js -->
-    <script src="https://unpkg.com/isotope-layout@3/dist/isotope.pkgd.js"></script>
+    <!-- <script src="https://unpkg.com/isotope-layout@3/dist/isotope.pkgd.js"></script> -->
     <!-- bootstrap js -->
-    <script src="bootstrap-5.0.2-dist/js/bootstrap.min.js"></script>
+    <!-- <script src="bootstrap-5.0.2-dist/js/bootstrap.min.js"></script> -->
     <!-- custom js -->
-    <script src="js/script.js"></script>
+
 </body>
 
 </html>
