@@ -1,4 +1,11 @@
 <?php
+session_name("customer");
+session_start();
+
+if (!$_SESSION['protected'] || $_SESSION['protected'] !== true) {
+    header("location:login.php");
+    exit();
+}
 
 $keyId = 'rzp_test_zfr5RqWYkXDs6r';
 $keySecret = 'JNGbCvj9AWZK2xGByrHk5aAy';

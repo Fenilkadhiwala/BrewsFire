@@ -1,5 +1,14 @@
 <?php
 
+session_name("customer");
+session_start();
+
+if (!$_SESSION['protected'] || $_SESSION['protected'] !== true) {
+    header("location:login.php");
+    exit();
+}
+
+
 if (isset($_GET['pwid']) && isset($_GET['cid']) && isset($_GET['spWeight']) && isset($_GET['spPrice']) && isset($_GET['spImg'])) {
     $pwid = $_GET['pwid'];
     $cid = $_GET['cid'];

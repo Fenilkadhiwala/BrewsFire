@@ -2,6 +2,15 @@
 
 include "./connection/connect.php";
 
+session_name("customer");
+session_start();
+
+if (!$_SESSION['protected'] || $_SESSION['protected'] !== true) {
+    header("location:login.php");
+    exit();
+}
+
+
 if (isset($_GET['n']) && isset($_GET['w']) && isset($_GET['q'])) {
     $n = $_GET['n'];
     $w = $_GET['w'];

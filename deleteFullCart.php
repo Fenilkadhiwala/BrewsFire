@@ -1,6 +1,13 @@
 <?php
 
 include "./connection/connect.php";
+session_name("customer");
+session_start();
+
+if (!$_SESSION['protected'] || $_SESSION['protected'] !== true) {
+    header("location:login.php");
+    exit();
+}
 
 $cartQuery = "DELETE FROM `cart`";
 

@@ -4,6 +4,12 @@ include "./connection/connectAdmin.php";
 
 session_name("customer");
 session_start();
+
+if (!$_SESSION['protected'] || $_SESSION['protected'] !== true) {
+    header("location:login.php");
+    exit();
+}
+
 if (isset($_SESSION['id'])) {
 
     // $btn = "sign out";
@@ -15,6 +21,8 @@ if (isset($_SESSION['id'])) {
     // $btn = "sign in";
     $flag = 0;
 }
+
+
 
 
 ?>
@@ -289,7 +297,7 @@ if (isset($_SESSION['id'])) {
                     <li class="nav-item px-2 py-2">
                         <a class="nav-link text-uppercase text-dark" href="index.php">about us</a>
                     </li>
-                    
+
                     <?php
                     if ($flag == 1) {
                         echo '

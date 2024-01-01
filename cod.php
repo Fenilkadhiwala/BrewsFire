@@ -5,6 +5,12 @@ include "./connection/connectAdmin.php";
 session_name("customer");
 session_start();
 
+if (!$_SESSION['protected'] || $_SESSION['protected'] !== true) {
+    header("location:login.php");
+    exit();
+}
+
+
 if (isset($_SESSION['id'])) {
 
     // $btn = "sign out";

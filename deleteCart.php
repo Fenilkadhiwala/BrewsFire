@@ -1,10 +1,17 @@
 <?php
+include "./connection/connect.php";
+session_name("customer");
+session_start();
+
+if (!$_SESSION['protected'] || $_SESSION['protected'] !== true) {
+    header("location:login.php");
+    exit();
+}
 
 if (isset($_GET['itemId'])) {
     $itemId = $_GET['itemId'];
 }
 
-include "./connection/connect.php";
 
 $cartQuery = "DELETE FROM `cart` WHERE id=$itemId";
 

@@ -8,6 +8,12 @@ include("config.php");
 session_name("customer");
 session_start();
 
+if (!$_SESSION['protected'] || $_SESSION['protected'] !== true) {
+    header("location:login.php");
+    exit();
+}
+
+
 if (isset($_SESSION['id'])) {
     $uid = $_SESSION['id'];
 
@@ -114,9 +120,9 @@ $json = json_encode($data);
                 data-prefill.email="<?php echo $data['prefill']['email'] ?>"
                 data-prefill.contact="<?php echo $data['prefill']['contact'] ?>" data-notes.shopping_order_id="3456"
                 data-order_id="<?php echo $data['order_id'] ?>" <?php if ($displayCurrency !== 'INR') { ?>
-                                data-display_amount="<?php echo $data['display_amount'] ?>" <?php } ?>
+                                    data-display_amount="<?php echo $data['display_amount'] ?>" <?php } ?>
                 <?php if ($displayCurrency !== 'INR') { ?>
-                                data-display_currency="<?php echo $data['display_currency'] ?>" <?php } ?>>
+                                    data-display_currency="<?php echo $data['display_currency'] ?>" <?php } ?>>
             </script>
             <!-- Any extra fields to be submitted with the form but not sent to Razorpay -->
             <input type="hidden" name="shopping_order_id" value="3456">

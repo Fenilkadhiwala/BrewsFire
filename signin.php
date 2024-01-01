@@ -18,6 +18,7 @@ if (isset($_POST['login'])) {
         session_name("customer");
         session_start();
         $_SESSION['id'] = $rows['id'];
+        $_SESSION['protected'] = true;
         header("location:index.php");
     } else {
 
