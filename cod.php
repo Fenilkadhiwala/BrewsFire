@@ -1,9 +1,6 @@
 <?php
 include "./connection/connect.php";
 include "./connection/connectAdmin.php";
-require('config.php');
-require('razorpay-php-2.9.0/Razorpay.php');
-include("config.php");
 
 session_name("customer");
 session_start();
@@ -19,78 +16,6 @@ if (isset($_SESSION['id'])) {
     // $btn = "sign in";
     $flag = 0;
 }
-
-if (isset($_SESSION['id'])) {
-    $uid = $_SESSION['id'];
-    // $fname = $_SESSION['fname'];
-    // $lname = $_SESSION['lname'];
-    // $email = $_SESSION['email'];
-    // $contact = $_SESSION['contact'];
-
-} else {
-    header("location:login.php");
-    exit();
-}
-
-use Razorpay\Api\Api;
-
-require('config.php');
-
-// session_start();
-
-// require('razorpay-php/Razorpay.php');
-// use Razorpay\Api\Api;
-use Razorpay\Api\Errors\SignatureVerificationError;
-
-$success = true;
-
-$error = "Payment Failed";
-
-if (empty($_POST['razorpay_payment_id']) === false) {
-    $api = new Api($keyId, $keySecret);
-
-    try {
-        $attributes = array(
-            'razorpay_order_id' => $_SESSION['razorpay_order_id'],
-            'razorpay_payment_id' => $_POST['razorpay_payment_id'],
-            'razorpay_signature' => $_POST['razorpay_signature']
-        );
-
-        $api->utility->verifyPaymentSignature($attributes);
-    } catch (SignatureVerificationError $e) {
-        $success = false;
-        $error = 'Razorpay Error : ' . $e->getMessage();
-    }
-}
-
-if ($success === true) {
-    // $html = "<p>Your payment was successful</p>
-    //          <p>Payment ID: {$_POST['razorpay_payment_id']}</p>";
-
-    date_default_timezone_set('Asia/Kolkata');
-    $cust_id = $uid;
-    $transId = $_POST['razorpay_payment_id'];
-    $amount = $_SESSION['grandAmount'];
-    $currentDateTimeIndia = date('Y-m-d H:i:s');
-    $status = 1;
-
-    $statusQuery = "INSERT INTO `payment`(cust_id,transaction_date,transaction_id,amount,status) VALUES('$cust_id','$currentDateTimeIndia','$transId','$amount','$status')";
-    $pCheck = mysqli_query($con, $statusQuery);
-
-} else {
-    date_default_timezone_set('Asia/Kolkata');
-    $cust_id = $uid;
-    $transId = $_POST['razorpay_payment_id'];
-    $amount = $_SESSION['grandAmount'];
-    $currentDateTimeIndia = date('Y-m-d H:i:s');
-    $status = 0;
-
-    $statusQuery = "INSERT INTO `payment`(cust_id,transaction_date,transaction_id,amount,status) VALUES('$cust_id','$currentDateTimeIndia,'$transId','$amount','$status')";
-    mysqli_query($con, $statusQuery);
-
-}
-
-// echo $html;
 
 ?>
 <!DOCTYPE html>
@@ -297,62 +222,60 @@ if ($success === true) {
                             <div class="col-md-8 col-lg-8 col-12 d-flex align-items-center flex-column">
                                 <?php
 
-                                $pQuery = "SELECT * FROM `payment` WHERE transaction_id='$transId'";
-                                $pRes = mysqli_query($con, $pQuery);
-
-                                $pRow = mysqli_fetch_assoc($pRes);
-
-                                $st = $pRow['status'];
-                                $am = $pRow['amount'];
-
-                                if ($st == 1) {
-
-                                    $histQ = "SELECT * FROM `cart` WHERE cust_id=$uid";
-
-                                    $histRes = mysqli_query($con, $histQ);
-
-                                    while ($histR = mysqli_fetch_assoc($histRes)) {
-                                        $cust_id = $histR['cust_id'];
-                                        $p_id = $histR['product_id'];
-                                        $sp_w = $histR['spWeight'];
-                                        $sp_qty = $histR['qty'];
-                                        $sp_img = $histR['spImg'];
+                                // $pQuery = "SELECT * FROM `payment` WHERE transaction_id='$transId'";
+                                // $pRes = mysqli_query($con, $pQuery);
+                                
+                                // $pRow = mysqli_fetch_assoc($pRes);
+                                
+                                // $st = $pRow['status'];
+                                // $am = $pRow['amount'];
+                                
 
 
-                                        $nameQ = "SELECT name FROM `products` WHERE id=$p_id;";
-                                        $nameRes = mysqli_query($conAdmin, $nameQ);
+                                $histQ = "SELECT * FROM `cart` WHERE cust_id=$uid";
 
-                                        $prodRow = mysqli_fetch_assoc($nameRes);
+                                $histRes = mysqli_query($con, $histQ);
 
-                                        $prodName = $prodRow['name'];
-
-                                        $currentDate = date('l, F j');
-                                        $expectedDate = date('Y-m-d', strtotime($currentDate . ' + 8 days'));
-                                        $ps = 1;
-                                        $orderQuery = "INSERT INTO `orders`(cust_id,order_date,expected_date,payment_status) VALUES('$uid','$currentDate','$expectedDate','$ps')";
-                                        mysqli_query($con, $orderQuery);
-
-                                        $retOId = "SELECT * FROM `orders` WHERE cust_id='$cust_id' ORDER BY id DESC LIMIT 1";
-                                        $retRes = mysqli_query($con, $retOId);
-                                        $or = mysqli_fetch_assoc($retRes);
-                                        $oid = $or['id'];
+                                while ($histR = mysqli_fetch_assoc($histRes)) {
+                                    $cust_id = $histR['cust_id'];
+                                    $p_id = $histR['product_id'];
+                                    $sp_w = $histR['spWeight'];
+                                    $sp_qty = $histR['qty'];
+                                    $sp_img = $histR['spImg'];
 
 
-                                        $histQuery = "INSERT INTO `history`(cust_id,oid,product_id,spName,spWeight,qty,spImg) VALUES('$cust_id','$oid','$p_id','$prodName','$sp_w','$sp_qty','$sp_img')";
+                                    $nameQ = "SELECT name FROM `products` WHERE id=$p_id;";
+                                    $nameRes = mysqli_query($conAdmin, $nameQ);
 
-                                        mysqli_query($con, $histQuery);
-                                    }
+                                    $prodRow = mysqli_fetch_assoc($nameRes);
 
-                                    $delQuery = "DELETE FROM `cart` WHERE cust_id=$uid";
-                                    $delRes = mysqli_query($con, $delQuery);
+                                    $prodName = $prodRow['name'];
+
+                                    $currentDate = date('l, F j');
+                                    $expectedDate = date('Y-m-d', strtotime($currentDate . ' + 8 days'));
+                                    $ps = 0;
+                                    $orderQuery = "INSERT INTO `orders`(cust_id,order_date,expected_date,payment_status) VALUES('$uid','$currentDate','$expectedDate','$ps')";
+                                    mysqli_query($con, $orderQuery);
+
+                                    $retOId = "SELECT * FROM `orders` WHERE cust_id='$cust_id' ORDER BY id DESC LIMIT 1";
+                                    $retRes = mysqli_query($con, $retOId);
+                                    $or = mysqli_fetch_assoc($retRes);
+                                    $oid = $or['id'];
 
 
-                                    echo '
-                                <i class="fa-solid fa-badge-check successIcon"></i>
-                             <h3 class="mt-4" style="color:green">Success</h3>';
-                                } else {
-                                    echo '<h3 style="color:red">Failed</h3>';
+                                    $histQuery = "INSERT INTO `history`(cust_id,oid,product_id,spName,spWeight,qty,spImg) VALUES('$cust_id','$oid','$p_id','$prodName','$sp_w','$sp_qty','$sp_img')";
+
+                                    mysqli_query($con, $histQuery);
                                 }
+
+                                $delQuery = "DELETE FROM `cart` WHERE cust_id=$uid";
+                                $delRes = mysqli_query($con, $delQuery);
+
+
+                                echo '
+                                <i class="fa-solid fa-badge-check successIcon"></i>
+                             <h3 class="mt-4" style="color:green">Order Confirmed</h3>';
+
                                 ?>
 
 
@@ -365,11 +288,6 @@ if ($success === true) {
                         <div class="row">
                             <div class="col-12 d-flex justify-content-center flex-column align-items-center">
                                 <!-- <p>Your Order Is Confirmed</p> -->
-                                <p>Amount Paid:
-                                    <?php
-                                    echo '₹' . " " . $am;
-                                    ?>
-                                </p>
                                 <a href="orders.php" id="back" class="btn btn-danger mb-4">Done</a>
                             </div>
 

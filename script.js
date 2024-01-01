@@ -28,4 +28,33 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     });
   });
+
+  var hiddenField = document.querySelector(".hiddenField");
+  var orderBtn = document.getElementById("place");
+
+  if (hiddenField) {
+    orderBtn.style.display = "none";
+  } else {
+    orderBtn.style.display = "block";
+  }
+
+  var placeBtn = document.getElementById('place')
+
+function updateCODText() {
+    placeBtn.innerText = "Place Order";
+}
+
+
+function updateText() {
+    placeBtn.innerText = "Proceed With Payment";
+}
+
+placeBtn.addEventListener("click", () => {
+    if (placeBtn.innerText === "Proceed With Payment") {
+        window.location.href = "pay.php";
+    } else {
+        window.location.href = "cod.php";
+        // console.log("CC");
+    }
+})
 });

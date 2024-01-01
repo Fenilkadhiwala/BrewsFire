@@ -6,10 +6,10 @@ session_name("customer");
 session_start();
 if (isset($_SESSION['id'])) {
 
-    
+
     $flag = 1;
     $uid = $_SESSION['id'];
-    
+
 } else {
     // $btn = "sign in";
     $flag = 0;
@@ -42,6 +42,7 @@ $contact = $fillRow['contact'];
         integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="css/main.css">
+    <script src="script.js"></script>
     <title>Document</title>
     <style>
     /* @import url('https://fonts.googleapis.com/css2?family=Mulish:wght@300&display=swap'); */
@@ -143,7 +144,7 @@ $contact = $fillRow['contact'];
                     <li class="nav-item px-2 py-2">
                         <a class="nav-link text-uppercase text-dark" href="index.php">about us</a>
                     </li>
-                   
+
                     <?php
                     if ($flag == 1) {
                         echo '
@@ -242,19 +243,13 @@ $contact = $fillRow['contact'];
                             <div class="col-8 col-md-4 col-lg-4">
                             <a href="changeAddress.php?cust_id=' . $uid . '" class="btn btn-primary" id="checkout">Change Address</a>
                             </div>
-                        
                         </div>
                         ';
-
-
-
-
-
-
                         } else {
                             echo '<form action="saveAddress.php?cid=' . $uid . '" method="post">
                         <div class="form-group mt-3">
                             <label class="mb-2" for="uname">Name</label>
+                            <input type="hidden" class="hiddenField"/>
                             <input class="form-control" id="username" name="email" type="text"
                                 value="' . $first . " " . $last . '" required disabled />
                         </div>
@@ -453,8 +448,8 @@ $contact = $fillRow['contact'];
                                 </div>
                                 <div class="row">
                                     <div class="col-12 mt-2">
-                                        <input type="radio" onchange="updateCODText()" class="form-check-input" id="radio1" name="optradio"
-                                            value="option1" checked>
+                                        <input type="radio" onchange="updateCODText()" class="form-check-input"
+                                            id="radio2" name="optradio" value="option1" checked>
                                         <label class="form-check-label px-2" for="radio1">Cash On Delivery</label>
                                     </div>
                                 </div>
@@ -474,7 +469,7 @@ $contact = $fillRow['contact'];
 
                         <div class="row">
                             <div class="col-12 mt-2">
-                                <a href="pay.php" class="btn btn-primary mb-3" id="place">
+                                <a href="javascript:void(0)" class="btn btn-primary mb-3 orderBtn" id="place">
                                     Place Order
                                 </a>
                             </div>
@@ -495,14 +490,23 @@ $contact = $fillRow['contact'];
 <script>
 var placeBtn = document.getElementById('place')
 
-const updateCODText=()=>{
+function updateCODText() {
     placeBtn.innerText = "Place Order";
 }
 
 
-const updateText = () => {
+function updateText() {
     placeBtn.innerText = "Proceed With Payment";
 }
+
+placeBtn.addEventListener("click", () => {
+    if (placeBtn.innerText === "Proceed With Payment") {
+        window.location.href = "pay.php";
+    } else {
+        window.location.href = "cod.php";
+        // console.log("CC");
+    }
+})
 </script>
 
 
